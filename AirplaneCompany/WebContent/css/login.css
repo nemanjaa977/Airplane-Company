@@ -1,0 +1,13 @@
+#loginForm{
+	margin-top: 70px;
+}
+
+#text{
+	text-align: center;
+	color: gray;
+	font-size: 25px;
+}
+
+button{
+	float: right;
+}

@@ -1,0 +1,16 @@
+#mainn {
+	margin-top: 50px;
+}
+
+.numberID {
+	text-decoration: none;
+	color: gray;
+}
+
+#searchBox {
+	margin-top: 40px;
+}
+
+#manageUsers {
+	display: none;
+}
