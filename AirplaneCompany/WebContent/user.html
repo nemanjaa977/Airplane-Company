@@ -2,10 +2,10 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Users</title>
-		<link rel="stylesheet" type="text/css" href="css/users.css"> 
+		<title>Home</title>
+		<link rel="stylesheet" type="text/css" href="css/user.css"> 
 		<script src="js/jquery-3.2.1.js"></script>
-		<script type="text/javascript" src="js/users.js"></script>
+		<script type="text/javascript" src="js/user.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -29,24 +29,28 @@
 			</ul>
 		  </div>
 		</nav>
-		<div class="container-fluid col-md-8" id="searchBox">
-		    <form class="form-inline my-2 my-lg-0">
-	        	<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="inputSearch">
-		        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="searchOK">Search</button>
-		    </form>	
+		<div class="container-fluid col-md-8" id="mainn">		
 		</div>
-		<div class="container-fluid col-md-8" id="mainn">
-			<table class="table">
-			  <thead class="thead-dark">
-			    <tr>
-			      <th scope="col">username</th>
-      			  <th scope="col">date registration</th>
-			      <th scope="col">role</th>
-			    </tr>
-			  </thead>
-			  <tbody id="tbody">
-			  </tbody>
-			</table>
+		<div class="container-fluid col-md-6" id="editDiv">	
+			<form id="formEdit">
+			  <p id="text">Edit profile</p>
+			  <div class="form-group">
+			    <label for="inputUsername" id='labela'>Username</label>
+			    <input type="text" class="form-control" id="inputUsername">
+			  </div>
+			  <div class="form-group">
+			    <label for="inputPassword" id='labela'>Password</label>
+			    <input type="password" class="form-control" id="inputPassword">
+			  </div>
+			  <div class="form-group" id='radioDiv'>
+			  	<label for="adminId" id='labela'>Role: </label>
+			  	<label class="radio-inline"><input id='adminId' type="radio" name="optradio" checked>ADMIN</label>
+				<label class="radio-inline"><input id='userId' type="radio" name="optradio">REGISTRED_USER</label>
+			  </div>
+			  <button type="submit" class="btn btn-primary" id="editSubmit">Submit</button>
+			  <button type="button" class="btn btn-light" id="closeEditDiv">Close</button>
+			  <p id="provera"></p>
+			</form>	
 		</div>
 	</body>
 </html>

@@ -1,0 +1,27 @@
+#oneFlight {
+	margin-top: 50px;
+}
+
+#title {
+	font-size: 22px;
+	text-align: center;
+}
+
+.table > tbody > tr > th {
+	border-right: 1px solid gray;
+	text-align: center;
+}
+
+.table > tbody > tr > td {
+	color: gray;
+	cursor: pointer;
+	text-align: center;
+}
+
+.table > tbody > tr > td:hover {
+	color: black;
+}
+
+#manageUsers {
+	display: none;
+}

@@ -10,13 +10,14 @@ public class Flight {
 	private Airport comingAirport;
 	private int seatNumber;
 	private double priceTicket;
+	private boolean deleted;
 	
 	public Flight() {
 		
 	}
 
 	public Flight(int id, String number, String dateGoing, String dateComing, Airport goingAirport, Airport comingAirport,
-			int seatNumber, double priceTicket) {
+			int seatNumber, double priceTicket, boolean deleted) {
 		super();
 		this.id = id;
 		this.number = number;
@@ -26,6 +27,7 @@ public class Flight {
 		this.comingAirport = comingAirport;
 		this.seatNumber = seatNumber;
 		this.priceTicket = priceTicket;
+		this.deleted = deleted;
 	}
 
 	public int getId() {
@@ -91,7 +93,13 @@ public class Flight {
 	public void setPriceTicket(double priceTicket) {
 		this.priceTicket = priceTicket;
 	}
-	
-	
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 	
 }

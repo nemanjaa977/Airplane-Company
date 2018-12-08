@@ -34,6 +34,7 @@ CREATE TABLE flights (
 	comingAirport BIGINT NOT NULL,
 	seatNumber BIGINT NOT NULL,
 	priceTicket DOUBLE NOT NULL,
+	deleted BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(id),
 	FOREIGN KEY (goingAirport) REFERENCES airports(id) ON DELETE RESTRICT,
 	FOREIGN KEY (comingAirport) REFERENCES airports(id) ON DELETE RESTRICT

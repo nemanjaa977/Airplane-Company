@@ -12,7 +12,7 @@ $(document).ready(function() {
 					   "<li class='nav-item dropdown'>" +
 					   		"<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Profile</a>" +
 				   			"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>" +
-					   			"<a class='dropdown-item' href='#'>My Profile</a>" +
+					   			"<a class='dropdown-item' href='user.html?id="+data.logged.id+"'>My Profile</a>" +
 					   			"<a class='dropdown-item' href='users.html' id='manageUsers'>Manage Users</a>" +
 					   			"<div class='dropdown-divider'></div>" +
 				   				"<a class='dropdown-item' href='LogOutServlet'>Logout</a>" +
@@ -24,7 +24,7 @@ $(document).ready(function() {
 		for(i in data.users){
 			var u = data.users[i];
 			$('#tbody').append("<tr>" +
-							      "<td><a href='#' class='numberID'>"+u.username+"</a></td>" +
+							      "<td><a href='user.html?id="+u.id+"' class='numberID'>"+u.username+"</a></td>" +
 							      "<td>"+u.dateRegistration+"</td>" +
 							      "<td>"+u.role+"</td>" +
 							    "</tr>");

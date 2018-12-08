@@ -24,11 +24,19 @@ public class FlightServlet extends HttpServlet {
 		
 		ArrayList<Flight> flights = null;
 		User logged = null;
+		Flight flight = null;
 		
 		try {
 			HttpSession session = request.getSession();
 			logged = (User) session.getAttribute("loggedUser");
-			flights = FlightDAO.getAll();
+			
+			String id = request.getParameter("id");
+			if(id == null) {
+				flights = FlightDAO.getAll();
+			}else {
+				int newId = Integer.parseInt(id);
+				flight = FlightDAO.getOne(newId);
+			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -37,10 +45,12 @@ public class FlightServlet extends HttpServlet {
 		Map<String, Object> data = new HashMap<>();
 		data.put("flights", flights);
 		data.put("logged", logged);
+		data.put("flight", flight);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);
 		response.setContentType("application/json");
+		
 		response.getWriter().write(jsonData);
 		System.out.println(jsonData);
 	}
