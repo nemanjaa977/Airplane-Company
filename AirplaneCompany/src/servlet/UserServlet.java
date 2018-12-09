@@ -106,6 +106,44 @@ public class UserServlet extends HttpServlet {
 
 			response.setContentType("application/json");
 			response.getWriter().write(jsonData);
+			
+		}else if(status.equals("block")) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			User u = UserDAO.getOneId(id);
+			u.setBlocked(true);
+			
+			UserDAO.update(u);
+			
+			Map<String, Object> data = new HashMap<>();		
+			data.put("status", "success");
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
+			
+		}else if(status.equals("unblock")) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			User u = UserDAO.getOneId(id);
+			u.setBlocked(false);
+			
+			UserDAO.update(u);
+			
+			Map<String, Object> data = new HashMap<>();		
+			data.put("status", "success");
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
 		}
 		
 		

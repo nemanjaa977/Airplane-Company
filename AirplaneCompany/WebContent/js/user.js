@@ -7,6 +7,7 @@ $(document).ready(function() {
 	var user = $('#userId');
 	var username = $('#inputUsername');
 	var password = $('#inputPassword');
+	var p = null;
 	
 	$.get('UserServlet', {'id': userID}, function(data){
 		console.log('Logged: ' + data.logged.role);
@@ -36,10 +37,21 @@ $(document).ready(function() {
 			
 			if(data.logged.role == "ADMIN"){
 				document.getElementById('manageUsers').style.display='block';
-				$('#divB').append("<button type='button' class='btn btn-dark blockButton'><i class='fas fa-ban'></i> Block</button>" +
-			   					  "<button type='button' class='btn btn-danger deleteButton'><i class='fas fa-trash' id='"+userID+"'></i> Delete</button>");
+				$('#divB').append("<button type='button' class='btn btn-dark blockButton' id='"+userID+"'><i class='fas fa-ban'></i> Block</button>" +
+								  "<button type='button' class='btn btn-dark unblockButton' id='"+userID+"'><i class='fas fa-ban'></i> Unblock</button>" +
+			   					  "<button type='button' class='btn btn-danger deleteButton' id='"+userID+"'><i class='fas fa-trash'></i> Delete</button>");
 			}
 			
+			if(data.user.id == userID){
+				console.log(data.user.id);
+				if(data.user.blocked == true){
+					$('.blockButton').hide();
+				}else{
+					$('.unblockButton').hide();
+				}
+			}
+			
+			//click open edit div
 			$(document).on('click',".editButton", function(event){
 				$('#editDiv').fadeIn();
 				var userid = $(this).attr('id');
@@ -51,6 +63,7 @@ $(document).ready(function() {
 					
 					username.val(data.user.username);
 					password.val(data.user.password);
+					p = data.user.password;
 					
 					if(data.user.role == "ADMIN"){
 						admin.prop('checked',true);
@@ -66,7 +79,15 @@ $(document).ready(function() {
 			// edit submit button
 			$(document).on('click',"#editSubmit", function(event){
 				var newUsername = username.val();
+				
+				var pass = null;
 				var newPassword = password.val();
+				if(newPassword == ""){
+					pass = p;
+				}else{
+					pass = newPassword;
+				}
+				
 				var newRole = "REGISTERED_USER";
 				var newId = userID;
 				if(admin.is(':checked')){
@@ -76,7 +97,7 @@ $(document).ready(function() {
 				var json = {
 						'status': 'edit',
 						'username': newUsername,
-						'password': newPassword,
+						'password': pass,
 						'role': newRole,
 						'id': newId
 				}
@@ -105,6 +126,40 @@ $(document).ready(function() {
 				
 				var json = {
 						'status': 'delete',
+						'id': userId
+				}
+				
+				$.post('UserServlet',json,function(data){
+					window.location.replace("users.html");
+				});
+				
+				event.preventDefault();
+				return false;
+			});
+			
+			//block
+			$(document).on('click',".blockButton", function(event){
+				var userId = $(this).attr('id');
+				
+				var json = {
+						'status': 'block',
+						'id': userId
+				}
+				
+				$.post('UserServlet',json,function(data){
+					window.location.replace("users.html");
+				});
+				
+				event.preventDefault();
+				return false;
+			});
+			
+			//unblock
+			$(document).on('click',".unblockButton", function(event){
+				var userId = $(this).attr('id');
+				
+				var json = {
+						'status': 'unblock',
 						'id': userId
 				}
 				
