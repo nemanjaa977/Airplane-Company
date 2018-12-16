@@ -69,4 +69,14 @@
     <servlet-name>SearchServlet</servlet-name>
     <url-pattern>/SearchServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AirportServlet</display-name>
+    <servlet-name>AirportServlet</servlet-name>
+    <servlet-class>servlet.AirportServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AirportServlet</servlet-name>
+    <url-pattern>/AirportServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

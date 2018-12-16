@@ -2,6 +2,7 @@ $(document).ready(function() {
 	
 	var nav = $('#nav');
 	var navUser = $('#navLogged');
+	var message = $('#provera');
 	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
@@ -64,6 +65,81 @@ $(document).ready(function() {
 								    "</tr>");
 			}
 		});
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	$.get('AirportServlet', {}, function(data){
+		for(i in data.airports){
+			$('#goingAirport').append("<option value='"+data.airports[i].id+"'>"+data.airports[i].name+"</option>");
+			$('#comingAirport').append("<option value='"+data.airports[i].id+"'>"+data.airports[i].name+"</option>");
+		}
+	});
+	
+	//open add flight form
+	$(document).on('click',"#addFlight", function(event){
+		
+		$('#addFlightForm').fadeIn();
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	//click submit form for add flight
+	$(document).on('click',"#addSubmit", function(event){
+		
+		var numberF = $('#inputFlightNumber').val();
+		var dateG = $('#dateGoing').val();
+		var dateC = $('#dateComing').val();
+		var goingA = $('#goingAirport').val();
+		var comingA = $('#comingAirport').val();
+		var seatNumber = $('#inputSeatNumber').val();
+		var priceTicket = $('#inputPriceTicket').val();
+	
+		if(numberF == "" || seatNumber == "" || priceTicket == ""){
+			message.text("You need to fill in all fields!");
+		}else{
+			
+			json = {
+					'status': 'add',
+					'number': numberF,
+					'dateG': dateG,
+					'dateC': dateC,
+					'goingA': goingA,
+					'comingA': comingA,
+					'seatNumber': seatNumber,
+					'priceTicket': priceTicket
+			}
+			var date = new Date();
+			console.log(date);
+			if(dateG > dateC || dateG < date){
+				message.text("Date of going can't bigger than date of coming!");
+			}else{
+				$.post('FlightServlet', json, function(data) {
+					if (data.status == 'success') {
+						window.location.replace('index.html');
+					}
+				});
+			}
+			
+		}
+
+		event.preventDefault();
+		return false;
+	});
+	
+	// close add flight form
+	$(document).on('click',"#closeAdd", function(event){
+		
+		$('#addFlightForm').fadeOut();
+		
+		$('#inputFlightNumber').val("");
+		$('#dateGoing').val("");
+		$('#dateComing').val("");
+		$('#inputSeatNumber').val("");
+		$('#inputPriceTicket').val("");
+		message.text("");
 		
 		event.preventDefault();
 		return false;

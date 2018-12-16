@@ -8,17 +8,18 @@ $(document).ready(function() {
 		var userName = userNameInput.val();
 		var password = passwordInput.val();
 		
-		if(userName == "" || password == "")
+		if(userName == "" || password == ""){
 			message.text("You need to fill in all fields!");
-		
-		$.post('RegisterServlet', {'username': userName, 'password': password}, function(data) {
-			if (data.status == 'success') {
-				window.location.replace('index.html');
-			}
-			if (data.status == 'failure') {
-				message.text("Selected incorrect data!");
-			}
-		});
+		}else{
+			$.post('RegisterServlet', {'username': userName, 'password': password}, function(data) {
+				if (data.status == 'success') {
+					window.location.replace('index.html');
+				}
+				if (data.status == 'failure') {
+					message.text("Selected incorrect data!");
+				}
+			});
+		}
 
 		event.preventDefault();
 		return false;

@@ -57,7 +57,7 @@ $(document).ready(function() {
 				var userid = $(this).attr('id');
 				$.get('UserServlet',{'id':userid},function(data){
 					
-					if(data.user.role != 'ADMIN'){
+					if(data.user.role == 'ADMIN' || data.logged.type == 'ADMIN'){
 						$('#radioDiv').hide();
 					}
 					

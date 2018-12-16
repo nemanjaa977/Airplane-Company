@@ -9,8 +9,6 @@ import java.util.Date;
 
 import model.Airport;
 import model.Flight;
-import model.User;
-import model.User.Role;
 
 public class FlightDAO {
 	
@@ -138,6 +136,73 @@ public class FlightDAO {
 			try {rset.close();} catch (SQLException ex1) {ex1.printStackTrace();}
 		}
 		return null;
+	}
+	
+	public static boolean create(Flight flight) {
+		Connection conn = ConnectionManager.getConnection();	
+		PreparedStatement pstmt = null;
+		try {
+			String query = "INSERT INTO flights (numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket, deleted)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";	
+			pstmt = conn.prepareStatement(query);
+			
+			int index = 1;
+			pstmt.setString(index++, flight.getNumber());
+			Date myDate = DateConverter.stringToDateForWrite(flight.getDateGoing());
+			java.sql.Date date = new java.sql.Date(myDate.getTime());
+			pstmt.setDate(index++, date);
+			Date myDate2 = DateConverter.stringToDateForWrite(flight.getDateComing());
+			java.sql.Date date2 = new java.sql.Date(myDate2.getTime());
+			pstmt.setDate(index++, date2);
+			pstmt.setInt(index++, flight.getGoingAirport().getId());
+			pstmt.setInt(index++, flight.getComingAirport().getId());
+			pstmt.setInt(index++, flight.getSeatNumber());
+			pstmt.setDouble(index++, flight.getPriceTicket());
+			pstmt.setBoolean(index++, flight.isDeleted());
+			
+			return pstmt.executeUpdate() == 1;
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+		}
+
+		return false;
+	}
+	
+	public static int getFlightId() {
+		Connection conn = ConnectionManager.getConnection();
+		int id=0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT MAX(id) FROM flights";
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+		
+			if (rset.next()) {
+				id=rset.getInt(1);
+				
+			}
+			id++;
+			return id;
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return 0;
 	}
 
 }

@@ -51,5 +51,46 @@
 			  </tbody>
 			</table>
 		</div>
+		<div class="container-fluid col-md-10" id="addFlightForm">
+			<form id="formAddFlight" class='col-6'>
+			    <div class="form-group">
+			    	<label for="inputFlightNumber" id='labela'>Flight number</label>
+				    <input type="text" class="form-control" id="inputFlightNumber" placeholder="input number">
+			    </div>
+			    <div class="form-row">
+		            <div class="form-group col-md-6">
+		                <label for="dateGoing" id='labela'>Date of going</label>
+		                <input type="date" class="form-control" id="dateGoing">
+		            </div>
+		            <div class="form-group col-md-6">
+		                <label for="dateComing" id='labela'>Date of coming</label>
+		                <input type="date" class="form-control" id="dateComing">
+		            </div>
+		        </div>
+		        <div class="form-row">
+		        	<div class="form-group col-md-6">
+					    <label for="goingAirport">Going airport</label>
+					    <select class="form-control" id="goingAirport">
+					    </select>
+					 </div>
+ 		        	 <div class="form-group col-md-6">
+					    <label for="comingAirport">Coming airport</label>
+					    <select class="form-control" id="comingAirport">
+					    </select>
+					 </div>
+		        </div>
+    			<div class="form-group">
+			    	<label for="inputSeatNumber" id='labela'>Seat number</label>
+				    <input type="text" class="form-control" id="inputSeatNumber" placeholder="input seat number">
+			    </div>
+			    <div class="form-group">
+			    	<label for="inputPriceTicket" id='labela'>Ticket price</label>
+				    <input type="text" class="form-control" id="inputPriceTicket" placeholder="input price ticket">
+			    </div>
+			 	<button type="submit" class="btn btn-primary" id="addSubmit">Submit</button>
+			 	<button type="button" class="btn btn-light" id="closeAdd">Close</button>
+			  	<p id="provera"></p>
+			</form>
+		</div>
 	</body>
 </html>

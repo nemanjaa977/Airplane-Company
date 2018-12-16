@@ -18,3 +18,7 @@
 #addFlight {
 	margin-top: 20px;
 }
+
+#addFlightForm {
+	display: none;
+}

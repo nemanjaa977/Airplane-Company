@@ -8,7 +8,7 @@ import java.util.Date;
 public class DateConverter {
 	
 	public static String dateToString(Date date) {
-		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
+		SimpleDateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
 		String datum;
 		datum = formatvr.format(date);
 		return datum;
@@ -16,7 +16,7 @@ public class DateConverter {
 
 	public static Date stringToDate(String datum) {
 		try {
-			DateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
+			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
 
 			return formatvr.parse(datum);
 
