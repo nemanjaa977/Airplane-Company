@@ -44,3 +44,19 @@ INSERT INTO flights (numberF, dateGoing, dateComing, goingAirport, comingAirport
 	VALUES ('MF-21', '2018-6-1', '2018-6-7', 1, 2, 120, 1500.05);
 INSERT INTO flights (numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket)
 	VALUES ('LS-45', '2018-8-3', '2018-8-15', 2, 1, 120, 1850.05);
+	
+CREATE TABLE tickets (
+	id BIGINT AUTO_INCREMENT,
+	goingFlight BIGINT NOT NULL,
+	reverseFlight BIGINT NOT NULL,
+	seatOnGoingFlight BIGINT NOT NULL,
+	seatOnReverseFlight BIGINT NOT NULL,
+	dateReservation DATE,
+	dateOfSaleTicket DATE,
+	userCreateReservationOrSaleTicket BIGINT NOT NULL,
+	firstNamePassenger VARCHAR(20) NOT NULL,
+	lastNamePassenger VARCHAR(20) NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY (goingFlight) REFERENCES airports(id) ON DELETE RESTRICT,
+	FOREIGN KEY (reverseFlight) REFERENCES airports(id) ON DELETE RESTRICT
+);

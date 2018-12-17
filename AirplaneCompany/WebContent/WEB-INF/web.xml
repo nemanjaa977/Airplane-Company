@@ -79,4 +79,14 @@
     <servlet-name>AirportServlet</servlet-name>
     <url-pattern>/AirportServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TicketServlet</display-name>
+    <servlet-name>TicketServlet</servlet-name>
+    <servlet-class>servlet.TicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TicketServlet</servlet-name>
+    <url-pattern>/TicketServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

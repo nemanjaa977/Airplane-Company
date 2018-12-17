@@ -8,7 +8,7 @@ $(document).ready(function() {
 		console.log('Logged: ' + data.logged);
 		if(data.logged != null){
 			nav.append("<li class='nav-item'>" +
-							"<a class='nav-link' href='#'>Reservation/Sale ticket</a>" +
+							"<a class='nav-link' href='addTicket.html'>Reservation/Sale ticket</a>" +
 					   "</li>" +
 					   "<li class='nav-item dropdown'>" +
 					   		"<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Profile</a>" +
@@ -20,7 +20,6 @@ $(document).ready(function() {
 				   			"</div>" +
 				   	   "</li>");
 			if(data.logged.role == "ADMIN"){
-				$('#mainn').append("<button type='button' class='btn btn-primary'><i class='fas fa-plus'></i>  Add new flight</button>");
 				document.getElementById('manageUsers').style.display='block';
 			}
 			
@@ -44,8 +43,19 @@ $(document).ready(function() {
 		$('#readGoingAirport').text(data.flight.goingAirport.name);
 		$('#readCominDate').text(data.flight.comingAirport.name);
 		$('#readPriceTicket').text(data.flight.priceTicket + " $");
+		
+		$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-primary'><i class='far fa-edit'></i>  Edit</button>" +
+				"<button type='button' id='"+data.flight.id+"' class='btn btn-danger'><i class='fas fa-trash'></i>  Delete</button>" +
+				"<button type='button' id='"+data.flight.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-ticket-alt'></i>  Take a ticket</button>");
 	});
 	
+	$(document).on('click',".takeTicketFlight", function(event){
+		var path = "addTicket.html?id="+flightId;
+		window.location.replace(path);
+		
+		event.preventDefault();
+		return false;
+	});
 
 	
 });

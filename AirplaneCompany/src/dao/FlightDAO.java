@@ -18,10 +18,11 @@ public class FlightDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT * FROM flights WHERE id = ?";
+			String query = "SELECT * FROM flights WHERE id = ? AND deleted = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
+			pstmt.setBoolean(2, false);	
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
