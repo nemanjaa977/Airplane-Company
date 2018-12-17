@@ -3,9 +3,17 @@ $(document).ready(function() {
 	var nav = $('#nav');
 	var navUser = $('#navLogged');
 	var flightId = window.location.search.slice(1).split('&')[0].split('=')[1];
+	var message = $('#poruka');
+	
+	var startFlight = null;
+	var endFlight = null;
+	var loggedUU = null;
+	var seatGooo = 1;
+	var seatCoo = 1;
 	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
+		loggedUU = data.logged.id; 
 		if(data.logged != null){
 			nav.append("<li class='nav-item'>" +
 							"<a class='nav-link' href='addTicket.html'>Reservation/Sale ticket</a>" +
@@ -60,10 +68,15 @@ $(document).ready(function() {
 		// click to pick up going flight
 		$(document).on('click',".takeTicketFlight", function(event){
 			var oo = $(this).attr('id');
+			startFlight = oo;
 			// load seat for going flight
 			$.get('FlightServlet', {'id':oo }, function(data){
 				var f = data.flight;
-				$('#seatOfGoingFlight').append("<option value=''>"+f.seatNumber+"</option>");
+				for(var i=1;i<f.seatNumber+1;i++){
+					$('#seatOfGoingFlight').append("<option value='"+i+"'>"+i+"</option>");
+				}
+				seatGooo = $('#seatOfGoingFlight').val();
+				
 				$('#priceForOneTicket').text(f.priceTicket + '$'); // price ticket for going flight 
 		    });
 			
@@ -80,6 +93,7 @@ $(document).ready(function() {
 									    "</tr>");
 				}
 			});
+			
 			$('.takeTicketFlight').prop('disabled', true);
 			
 			event.preventDefault();
@@ -89,10 +103,14 @@ $(document).ready(function() {
 		// click to pick up coming flight
 		$(document).on('click',".takeAirportComing", function(event){
 			var ooo = $(this).attr('id');
+			endFlight = ooo;
 			// load seat for coming flight
 			$.get('FlightServlet', {'id':ooo }, function(data){
 				var f = data.flight;
-				$('#seatOfComingFlight').append("<option value=''>"+f.seatNumber+"</option>");
+				for(var i=1;i<f.seatNumber+1;i++){
+					$('#seatOfComingFlight').append("<option value='"+i+"'>"+i+"</option>");
+				}
+				seatCoo = $('#seatOfComingFlight').val();
 		    });
 			
 			$('.takeAirportComing').prop('disabled', true);
@@ -104,9 +122,32 @@ $(document).ready(function() {
 			return false;
 		});
 		
+		var firstName = $("#firstNamePass").val();
+		var namePass = $("#lastNamePass").val();
+		
 		// click to reservation ticket
 		$(document).on('click',"#reservationnSubmit", function(event){
-
+			console.log(seatGooo);
+			if(firstName == "" || namePass == ""){
+				console.log(firstName);
+				message.text("You need to fill in all fields!");
+				$('.message').fadeIn();
+			}else{
+				json = {
+						'status': 'add',
+						'goFlight': startFlight,
+						'coFlight': endFlight,
+						'seatGoing': seatGooo,
+						'seatComing': seatCoo,
+						'loggedUser': loggedUU,
+						'firstNameP': firstName,
+						'lastNameP': namePass,
+						'type': 'reservation'
+				}
+				$.post('TicketServlet', json, function(data){
+					window.location.replace("index.html");
+				});
+			}
 			
 			event.preventDefault();
 			return false;

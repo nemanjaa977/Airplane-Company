@@ -103,11 +103,23 @@ public class TicketDAO {
 			pstmt.setInt(index++, ticket.getReverseFlight().getId());
 			pstmt.setInt(index++, ticket.getSeatOnGoingFlight());
 			pstmt.setInt(index++, ticket.getSeatOnReverseFlight());
-			Date myDate = DateConverter.stringToDateForWrite(ticket.getDateReservation());
-			java.sql.Date date = new java.sql.Date(myDate.getTime());
+			Date myDate;
+			java.sql.Date date;
+			if(ticket.getDateReservation() !=null) {
+				myDate= DateConverter.stringToDateForWrite(ticket.getDateReservation());
+				date = new java.sql.Date(myDate.getTime());
+			}else {
+				date=null;
+			}
 			pstmt.setDate(index++, date);
-			Date myDate2 = DateConverter.stringToDateForWrite(ticket.getDateOfSaleTicket());
-			java.sql.Date date2 = new java.sql.Date(myDate2.getTime());
+			Date myDate2;
+			java.sql.Date date2;
+			if(ticket.getDateOfSaleTicket() != null) {
+				myDate2 = DateConverter.stringToDateForWrite(ticket.getDateOfSaleTicket()); 
+				date2 = new java.sql.Date(myDate2.getTime());
+			}else {
+				date2 = null;
+			}		
 			pstmt.setDate(index++, date2);
 			pstmt.setInt(index++, ticket.getUserCreateReservationOrSaleTicket().getId());
 			pstmt.setString(index++, ticket.getFirstNamePassenger());

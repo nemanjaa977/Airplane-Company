@@ -60,3 +60,8 @@ CREATE TABLE tickets (
 	FOREIGN KEY (goingFlight) REFERENCES airports(id) ON DELETE RESTRICT,
 	FOREIGN KEY (reverseFlight) REFERENCES airports(id) ON DELETE RESTRICT
 );
+
+INSERT INTO tickets (goingFlight, reverseFlight, seatOnGoingFlight, seatOnReverseFlight, dateReservation, dateOfSaleTicket, userCreateReservationOrSaleTicket, firstNamePassenger, lastNamePassenger)
+	VALUES (1, 2, 5, 18, '2018-9-8', NULL, 1, 'Chris', 'Pratt');
+INSERT INTO tickets (goingFlight, reverseFlight, seatOnGoingFlight, seatOnReverseFlight, dateReservation, dateOfSaleTicket, userCreateReservationOrSaleTicket, firstNamePassenger, lastNamePassenger)
+	VALUES (1, 2, 5, 18, NULL, '2018-9-8', 2, 'Vladimir', 'Putin');

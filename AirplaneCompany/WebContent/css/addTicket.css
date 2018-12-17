@@ -51,3 +51,19 @@
 	margin: 3px;
 	font-size: 25px;
 }
+
+.message {
+	display: none;
+	border-radius: 5px;
+	text-align: center;
+	margin-top: 5px;
+	border: 1px solid red;
+}
+
+#poruka {
+	font-size: 22px;
+	color: red;
+	padding-top: 10px;
+	font-style: oblique;
+	margin-right: 5px;
+}
