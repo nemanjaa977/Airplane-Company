@@ -21,6 +21,8 @@ $(document).ready(function() {
 				   	   "</li>");
 			if(data.logged.role == "ADMIN"){
 				document.getElementById('manageUsers').style.display='block';
+				$('#allReservationTicketByAdmin').show();
+				$('#allSoldTicketByAdmin').show();
 			}
 			
 		}else{
@@ -44,9 +46,13 @@ $(document).ready(function() {
 		$('#readCominDate').text(data.flight.comingAirport.name);
 		$('#readPriceTicket').text(data.flight.priceTicket + " $");
 		
-		$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-primary'><i class='far fa-edit'></i>  Edit</button>" +
-				"<button type='button' id='"+data.flight.id+"' class='btn btn-danger'><i class='fas fa-trash'></i>  Delete</button>" +
-				"<button type='button' id='"+data.flight.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-ticket-alt'></i>  Take a ticket</button>");
+		$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-ticket-alt'></i>  Take a ticket</button>");
+	
+		if(data.logged.role == 'ADMIN'){
+			$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-primary'><i class='far fa-edit'></i>  Edit</button>" +
+					"<button type='button' id='"+data.flight.id+"' class='btn btn-danger'><i class='fas fa-trash'></i>  Delete</button>");
+		}
+		
 	});
 	
 	$(document).on('click',".takeTicketFlight", function(event){
@@ -56,6 +62,37 @@ $(document).ready(function() {
 		event.preventDefault();
 		return false;
 	});
-
+	
+	$.get('TicketServlet', {}, function(data){
+		console.log(data);
+		for(i in data.tickets){
+			var t = data.tickets[i];
+			if(t.goingFlight.id == flightId && t.dateReservation != null){
+				$('#tbody_2').append("<tr id='allData'>" +
+					      "<td><a href='ticket.html?id="+t.id+"' class='dateRR'>"+t.dateReservation+"</a></td>" +
+					      "<td id='seatSorttt'>"+t.seatOnGoingFlight+"</td>" +
+					      "<td>"+t.seatOnReverseFlight+"</td>" +
+					      "<td><a href='user.html?id="+t.userCreateReservationOrSaleTicket.id+"' class='userRR'>"+t.userCreateReservationOrSaleTicket.username+"</a></td>" +
+					    "</tr>");
+			}
+		}
+	});
+	
+	$.get('TicketServlet', {}, function(data){
+		console.log(data);
+		for(i in data.tickets){
+			var t = data.tickets[i];
+			if(t.goingFlight.id == flightId && t.dateOfSaleTicket != null){
+				$('#tbody_3').append("<tr>" +
+					      "<td><a href='ticket.html?id="+t.id+"' class='dateSS'>"+t.dateOfSaleTicket+"</a></td>" +
+					      "<td>"+t.seatOnGoingFlight+"</td>" +
+					      "<td>"+t.seatOnReverseFlight+"</td>" +
+					      "<td><a href='user.html?id="+t.userCreateReservationOrSaleTicket.id+"' class='userRR'>"+t.userCreateReservationOrSaleTicket.username+"</a></td>" +
+					    "</tr>");
+			}
+		}
+	});
+	
 	
 });
+

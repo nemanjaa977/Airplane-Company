@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 
 import model.Flight;
@@ -32,10 +34,19 @@ public class TicketDAO {
 				Flight fc = FlightDAO.getOne(flightComing);
 				Integer seatOfGoingF = rset.getInt(index++);
 				Integer seatOfComingF = rset.getInt(index++);
+				
 				Date dateReservation = rset.getDate(index++);
-				String dc = DateConverter.dateToString(dateReservation);
+				String dc = null;
+				if(dateReservation != null) {
+					dc = DateConverter.dateToString(dateReservation);
+				}
+								
 				Date dateSale = rset.getDate(index++);
-				String ds = DateConverter.dateToString(dateSale);
+				String ds = null;
+				if(dateSale != null) {
+					ds = DateConverter.dateToString(dateSale);
+				}
+				
 				Integer userID = rset.getInt(index++);
 				User u = UserDAO.getOneId(userID);
 				String firstnameP = rset.getString(index++);
@@ -44,6 +55,60 @@ public class TicketDAO {
 				return new ReservationTicket(id, fg, fc, seatOfGoingF, seatOfComingF, dc, ds, u, firstnameP, lastNameP);
 			}
 			
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+		}
+
+		return null;
+	}
+	
+	public static ArrayList<ReservationTicket> getAll() {
+		
+		Connection conn = ConnectionManager.getConnection();
+		Statement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<ReservationTicket> tickets = new ArrayList<ReservationTicket>();
+		try {
+			String query = "SELECT * FROM tickets";
+
+			pstmt = conn.createStatement();	
+			rset = pstmt.executeQuery(query);
+
+			 while(rset.next()) {
+				int index = 1;
+				Integer id = rset.getInt(index++);
+				Integer flightGoing = rset.getInt(index++);
+				Flight fg = FlightDAO.getOne(flightGoing);
+				Integer flightComing = rset.getInt(index++);
+				Flight fc = FlightDAO.getOne(flightComing);
+				Integer seatOfGoingF = rset.getInt(index++);
+				Integer seatOfComingF = rset.getInt(index++);
+				
+				Date dateReservation = rset.getDate(index++);
+				String dc = null;
+				if(dateReservation != null) {
+					dc = DateConverter.dateToString(dateReservation);
+				}
+								
+				Date dateSale = rset.getDate(index++);
+				String ds = null;
+				if(dateSale != null) {
+					ds = DateConverter.dateToString(dateSale);
+				}
+						
+				Integer userID = rset.getInt(index++);
+				User u = UserDAO.getOneId(userID);
+				String firstnameP = rset.getString(index++);
+				String lastNameP = rset.getString(index++);
+				
+				tickets.add(new ReservationTicket(id, fg, fc, seatOfGoingF, seatOfComingF, dc, ds, u, firstnameP, lastNameP));
+				
+			}
+			 return tickets;
 		} catch (SQLException ex) {
 			System.out.println("Greska u SQL upitu!");
 			ex.printStackTrace();

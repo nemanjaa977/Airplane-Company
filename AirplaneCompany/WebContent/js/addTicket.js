@@ -8,8 +8,6 @@ $(document).ready(function() {
 	var startFlight = null;
 	var endFlight = null;
 	var loggedUU = null;
-	var seatGooo = 1;
-	var seatCoo = 1;
 	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
@@ -75,7 +73,6 @@ $(document).ready(function() {
 				for(var i=1;i<f.seatNumber+1;i++){
 					$('#seatOfGoingFlight').append("<option value='"+i+"'>"+i+"</option>");
 				}
-				seatGooo = $('#seatOfGoingFlight').val();
 				
 				$('#priceForOneTicket').text(f.priceTicket + '$'); // price ticket for going flight 
 		    });
@@ -110,7 +107,6 @@ $(document).ready(function() {
 				for(var i=1;i<f.seatNumber+1;i++){
 					$('#seatOfComingFlight').append("<option value='"+i+"'>"+i+"</option>");
 				}
-				seatCoo = $('#seatOfComingFlight').val();
 		    });
 			
 			$('.takeAirportComing').prop('disabled', true);
@@ -122,12 +118,15 @@ $(document).ready(function() {
 			return false;
 		});
 		
-		var firstName = $("#firstNamePass").val();
-		var namePass = $("#lastNamePass").val();
-		
 		// click to reservation ticket
 		$(document).on('click',"#reservationnSubmit", function(event){
-			console.log(seatGooo);
+			
+			var firstName = $("#firstNamePass").val();
+			var namePass = $("#lastNamePass").val();
+			
+			var seatGooo = $('#seatOfGoingFlight').val();
+			var seatCoo = $('#seatOfComingFlight').val();
+			
 			if(firstName == "" || namePass == ""){
 				console.log(firstName);
 				message.text("You need to fill in all fields!");
@@ -155,6 +154,33 @@ $(document).ready(function() {
 		
 		// click to buy a ticket
 		$(document).on('click',"#saleTicketSubmit", function(event){
+			
+			var firstName = $("#firstNamePass").val();
+			var namePass = $("#lastNamePass").val();
+			
+			var seatGooo = $('#seatOfGoingFlight').val();
+			var seatCoo = $('#seatOfComingFlight').val();
+			
+			if(firstName == "" || namePass == ""){
+				console.log(firstName);
+				message.text("You need to fill in all fields!");
+				$('.message').fadeIn();
+			}else{
+				json = {
+						'status': 'add',
+						'goFlight': startFlight,
+						'coFlight': endFlight,
+						'seatGoing': seatGooo,
+						'seatComing': seatCoo,
+						'loggedUser': loggedUU,
+						'firstNameP': firstName,
+						'lastNameP': namePass,
+						'type': 'sale'
+				}
+				$.post('TicketServlet', json, function(data){
+					window.location.replace("index.html");
+				});
+			}
 			
 			event.preventDefault();
 			return false;

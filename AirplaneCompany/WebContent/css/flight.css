@@ -33,3 +33,28 @@
 #divButton > button {
 	margin: 4px;
 }
+
+#titleForReservation {
+	text-align: center;
+	font-size: 30px;
+	color: #333;
+	margin-top: 20px;
+}
+
+#allReservationTicketByAdmin {
+	display: none;
+	margin-top: 20px;
+}
+
+#titleForSale {
+	text-align: center;
+	font-size: 30px;
+	color: #333;
+	margin-top: 20px;
+}
+
+#allSoldTicketByAdmin {
+	display: none;
+	margin-top: 20px;
+}
+
