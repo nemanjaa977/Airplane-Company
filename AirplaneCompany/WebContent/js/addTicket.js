@@ -79,15 +79,27 @@ $(document).ready(function() {
 			
 			$('#sale_3').fadeIn();
 			
+			var cominggAirport;
+			var goinggAirport;
+			var cominggDate;
 			$.get('FlightServlet', {}, function(data){
+				$.get('FlightServlet', {'id':startFlight}, function(data){
+					var f2 = data.flight
+					cominggAirport = f2.comingAirport.id;
+					goinggAirport = f2.goingAirport.id;
+					cominggDate = f2.dateComing;
+
+				});
 				for(i in data.flights){
 					var f = data.flights[i];
-					$('#tbody_3').append("<tr>" +
-									      "<td>"+f.number+"</td>" +
-									      "<td>"+f.dateGoing+"</td>" +
-									      "<td>"+f.goingAirport.name+"</td>" +
-									      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeAirportComing'><i class='fas fa-check'></i> Check</button></td>" +
-									    "</tr>");
+//					if(f.goingAirport.id == cominggAirport && f.comingAirport.id == goinggAirport && f.dateGoing > cominggDate){
+						$('#tbody_3').append("<tr>" +
+							      "<td>"+f.number+"</td>" +
+							      "<td>"+f.dateGoing+"</td>" +
+							      "<td>"+f.goingAirport.name+"</td>" +
+							      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeAirportComing'><i class='fas fa-check'></i> Check</button></td>" +
+							    "</tr>");
+//					}
 				}
 			});
 			

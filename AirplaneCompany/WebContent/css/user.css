@@ -59,10 +59,21 @@
 }
 
 form > button {
-	float: right;
 	margin: 2px;
 }
 
 #radioDiv > label {
 	margin-left: 10px;
+}
+
+#titleTicket {
+	text-align: center;
+	font-size: 30px;
+	color: #333;
+	margin-top: 20px;
+}
+
+#allReservationTicketByUser {
+	display: none;
+	margin-top: 20px;
 }

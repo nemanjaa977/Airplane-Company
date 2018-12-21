@@ -61,6 +61,47 @@
 			</table>
 			<div class='col-12' id='divButton'></div>
 		</div>
+		<div class="container-fluid col-md-8" id='editFlightByAdmin'>
+			<form id="formEditFlight" class='col-12'>
+			    <div class="form-group">
+			    	<label for="inputFlightNumber" id='labela'>Flight number</label>
+				    <input type="text" class="form-control" id="inputFlightNumber" readonly>
+			    </div>
+			    <div class="form-row">
+		            <div class="form-group col-md-6">
+		                <label for="dateGoing" id='labela'>Date of going</label>
+		                <input type="date" class="form-control" id="dateGoing" readonly>
+		            </div>
+		            <div class="form-group col-md-6">
+		                <label for="dateComing" id='labela'>Date of coming</label>
+		                <input type="date" class="form-control" id="dateComing">
+		            </div>
+		        </div>
+		        <div class="form-row">
+		        	<div class="form-group col-md-6">
+					    <label for="goingAirport">Going airport</label>
+					    <select class="form-control" id="goingAirport">
+					    </select>
+					 </div>
+ 		        	 <div class="form-group col-md-6">
+					    <label for="comingAirport">Coming airport</label>
+					    <select class="form-control" id="comingAirport">
+					    </select>
+					 </div>
+		        </div>
+    			<div class="form-group">
+			    	<label for="inputSeatNumber" id='labela'>Seat number</label>
+				    <input type="text" class="form-control" id="inputSeatNumber">
+			    </div>
+			    <div class="form-group">
+			    	<label for="inputPriceTicket" id='labela'>Ticket price</label>
+				    <input type="text" class="form-control" id="inputPriceTicket">
+			    </div>
+			 	<button type="submit" class="btn btn-primary" id="editFlightSubmit">Submit</button>
+			 	<button type="button" class="btn btn-light" id="closeEditForm">Close</button>
+			  	<p id="provera"></p>
+			</form>
+		</div>
 		<div class="container-fluid col-md-8" id='allReservationTicketByAdmin'>
 			<p id='titleForReservation'>All reservation ticket for this flight</p>
 			<table class="table" id='tableReservation'>

@@ -10,6 +10,9 @@ CREATE TABLE airports (
 
 INSERT INTO airports (name) VALUES ('Airport Nikola Tesla Belgrade');
 INSERT INTO airports (name) VALUES ('Airport Qatar Airways');
+INSERT INTO airports (name) VALUES ('Tokyo Haneda Airport');
+INSERT INTO airports (name) VALUES ('London Heathrow Airport');
+INSERT INTO airports (name) VALUES ('Frankfurt Airport');
 
 CREATE TABLE users (
 	id BIGINT AUTO_INCREMENT,
@@ -43,7 +46,11 @@ CREATE TABLE flights (
 INSERT INTO flights (numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket)
 	VALUES ('MF-21', '2018-6-1', '2018-6-7', 1, 2, 120, 1500.05);
 INSERT INTO flights (numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket)
-	VALUES ('LS-45', '2018-8-3', '2018-8-15', 2, 1, 120, 1850.05);
+	VALUES ('LS-45', '2018-8-3', '2018-8-15', 2, 1, 190, 1850.05);
+INSERT INTO flights (numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket)
+	VALUES ('SV-36', '2018-12-26', '2018-12-30', 4, 2, 150, 1650.75);
+INSERT INTO flights (numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket)
+	VALUES ('SV-36', '2018-12-27', '2018-12-30', 5, 4, 220, 3500.75);	
 	
 CREATE TABLE tickets (
 	id BIGINT AUTO_INCREMENT,

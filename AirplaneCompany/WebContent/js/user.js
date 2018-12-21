@@ -60,6 +60,9 @@ $(document).ready(function() {
 					if(data.user.role == 'ADMIN' || data.logged.type == 'ADMIN'){
 						$('#radioDiv').hide();
 					}
+					if(data.user.role != 'ADMIN'){
+						$('#radioDiv').hide();
+					}
 					
 					username.val(data.user.username);
 					password.val(data.user.password);
@@ -170,6 +173,39 @@ $(document).ready(function() {
 				event.preventDefault();
 				return false;
 			});
+			
+			// all reservation or buy ticket for user
+			if(data.logged.id == data.user.id){
+				$.get('TicketServlet', {}, function(data){
+					console.log(data);
+					for(i in data.tickets){
+						var t = data.tickets[i];
+						if(t.userCreateReservationOrSaleTicket.id == data.logged.id){
+							$('#tbody_2').append("<tr>" +
+								      "<td><a href='ticket.html?id="+t.id+"' class='dateRRR'>"+t.dateReservation+"</a></td>" +
+								      "<td><a href='ticket.html?id="+t.id+"' class='dateSSS'>"+t.dateOfSaleTicket+"</a></td>" +
+								      "<td>"+t.seatOnGoingFlight+"</td>" +
+								      "<td>"+t.seatOnReverseFlight+"</td>" +
+								      "<td><a href='user.html?id="+t.userCreateReservationOrSaleTicket.id+"' class='userRR'>"+t.userCreateReservationOrSaleTicket.username+"</a></td>" +
+								    "</tr>");
+							var dates = $('.dateSSS');
+							console.log(dates);
+							var dater = $('.dateRRR');
+							console.log(dater);
+							if(dates.text() == 'null'){
+								dates.text('---');
+								dates.removeAttr('href');
+							}
+							if(dater.text() == 'null'){
+								dater.text('---');
+								dater.removeAttr('href');
+							}
+						}
+					}
+				});
+				$('#allReservationTicketByUser').show();
+			}
+			
 			
 		}else{
 			navUser.append("<li class='nav-item'>" +

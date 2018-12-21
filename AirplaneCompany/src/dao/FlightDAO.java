@@ -103,7 +103,7 @@ public class FlightDAO {
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		ResultSet rset = null;
 		try {
-			String query = "SELECT DISTINCT id, numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket FROM flights "
+			String query = "SELECT DISTINCT id, numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket, deleted FROM flights "
 					+ " WHERE numberF LIKE '%" +inputText+ "%' OR dateGoing LIKE '%" +inputText+ "%' OR dateComing LIKE '%" +inputText+ "%' OR goingAirport LIKE '%" +inputText+ "%'"
 					+ " OR comingAirport LIKE '%" +inputText+ "%' OR priceTicket LIKE '%" +inputText+ "%' ";
 			pstmt = conn.prepareStatement(query);

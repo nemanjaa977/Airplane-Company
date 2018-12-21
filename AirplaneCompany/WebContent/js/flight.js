@@ -49,8 +49,10 @@ $(document).ready(function() {
 		$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-ticket-alt'></i>  Take a ticket</button>");
 	
 		if(data.logged.role == 'ADMIN'){
-			$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-primary'><i class='far fa-edit'></i>  Edit</button>" +
+			$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-primary editFlightButton'><i class='far fa-edit'></i>  Edit</button>" +
 					"<button type='button' id='"+data.flight.id+"' class='btn btn-danger'><i class='fas fa-trash'></i>  Delete</button>");
+			
+			$('#editFlightByAdmin').append();
 		}
 		
 	});
@@ -63,6 +65,7 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	// all reservation ticket for admin
 	$.get('TicketServlet', {}, function(data){
 		console.log(data);
 		for(i in data.tickets){
@@ -78,6 +81,7 @@ $(document).ready(function() {
 		}
 	});
 	
+	// all sold ticket for admin
 	$.get('TicketServlet', {}, function(data){
 		console.log(data);
 		for(i in data.tickets){
@@ -91,6 +95,40 @@ $(document).ready(function() {
 					    "</tr>");
 			}
 		}
+	});
+	
+	$(document).on('click',".editFlightButton", function(event){
+		var idFlight = $(this).attr('id');
+		$('#formEditFlight').fadeIn();
+		
+		$.get('AirportServlet', {}, function(data){
+			for(i in data.airports){
+				$('#goingAirport').append("<option value='"+data.airports[i].id+"'>"+data.airports[i].name+"</option>");
+				$('#comingAirport').append("<option value='"+data.airports[i].id+"'>"+data.airports[i].name+"</option>");
+			}
+		});
+		
+		$.get('FlightServlet', {'id': idFlight}, function(data){
+			$('#inputFlightNumber').val(data.flight.number);
+			$('#dateGoing').val(data.flight.dateGoing);
+			$('#dateComing').val(data.flight.dateComing);
+//			$('#goingAirport').val(data.flight.goingAirport.id);
+//			$('#comingAirport').val(data.flight.comingAirport.id);
+			$('#inputSeatNumber').val(data.flight.seatNumber);
+			$('#inputPriceTicket').val(data.flight.priceTicket);
+			
+		});
+		
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	$(document).on('click',"#closeEditForm", function(event){
+		$('#formEditFlight').fadeOut();
+		
+		event.preventDefault();
+		return false;
 	});
 	
 	
