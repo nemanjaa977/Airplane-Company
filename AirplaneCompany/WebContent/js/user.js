@@ -57,10 +57,7 @@ $(document).ready(function() {
 				var userid = $(this).attr('id');
 				$.get('UserServlet',{'id':userid},function(data){
 					
-					if(data.user.role == 'ADMIN' || data.logged.type == 'ADMIN'){
-						$('#radioDiv').hide();
-					}
-					if(data.user.role != 'ADMIN'){
+					if(data.logged.role != 'ADMIN'){
 						$('#radioDiv').hide();
 					}
 					
@@ -181,17 +178,25 @@ $(document).ready(function() {
 					for(i in data.tickets){
 						var t = data.tickets[i];
 						if(t.userCreateReservationOrSaleTicket.id == data.logged.id){
-							$('#tbody_2').append("<tr>" +
+							$('#tbody_2').append("<tr id="+t.id+">" +
 								      "<td><a href='ticket.html?id="+t.id+"' class='dateRRR'>"+t.dateReservation+"</a></td>" +
 								      "<td><a href='ticket.html?id="+t.id+"' class='dateSSS'>"+t.dateOfSaleTicket+"</a></td>" +
 								      "<td>"+t.seatOnGoingFlight+"</td>" +
 								      "<td>"+t.seatOnReverseFlight+"</td>" +
 								      "<td><a href='user.html?id="+t.userCreateReservationOrSaleTicket.id+"' class='userRR'>"+t.userCreateReservationOrSaleTicket.username+"</a></td>" +
 								    "</tr>");
+							var dates = $('#'+t.id+' .dateSSS');
+							var dater = $('#'+t.id+' .dateRRR');
+							if(dates.text() == 'null'){
+								dates.text('---');
+								dates.removeAttr('href');
+							}
+							if(dater.text() == 'null'){
+								dater.text('---');
+								dater.removeAttr('href');
+							}
 							var dates = $('.dateSSS');
-							console.log(dates);
 							var dater = $('.dateRRR');
-							console.log(dater);
 							if(dates.text() == 'null'){
 								dates.text('---');
 								dates.removeAttr('href');

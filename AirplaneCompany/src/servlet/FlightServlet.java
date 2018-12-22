@@ -96,6 +96,42 @@ public class FlightServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(jsonData);
 			
+		}else if(status.equals("edit")) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+		    String dc = request.getParameter("dateC");
+		    
+		    String aGO = request.getParameter("airportG");
+		    int ag = Integer.parseInt(aGO);
+		    Airport a1 = AirportDAO.getOne(ag); 
+		    String aCO = request.getParameter("airportC");
+		    int ac = Integer.parseInt(aCO);
+		    Airport a2 = AirportDAO.getOne(ac);
+		    
+		    String seat = request.getParameter("seatNumber");
+		    int seatNumer = Integer.parseInt(seat);
+		    
+		    String ticket = request.getParameter("price");
+			double priceT = Double.parseDouble(ticket);
+			
+			Flight flight = FlightDAO.getOne(id);
+			flight.setDateComing(dc);
+			flight.setGoingAirport(a1);
+			flight.setComingAirport(a2);
+			flight.setSeatNumber(seatNumer);
+		    flight.setPriceTicket(priceT);
+		    
+			FlightDAO.update(flight);
+			Map<String, Object> data = new HashMap<>();
+			
+			data.put("status", "success");
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
+			
 		}
 		
 	}

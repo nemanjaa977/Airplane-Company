@@ -9,6 +9,7 @@ import java.util.Date;
 
 import model.Airport;
 import model.Flight;
+import model.User;
 
 public class FlightDAO {
 	
@@ -204,6 +205,36 @@ public class FlightDAO {
 			}
 		}
 		return 0;
+	}
+	
+	public static boolean update(Flight flight) {
+		Connection conn = ConnectionManager.getConnection();	
+		PreparedStatement pstmt = null;
+		try {
+			String query = "UPDATE flights SET dateComing = ?, goingAirport = ?, comingAirport = ?, seatNumber = ?, priceTicket = ?, deleted = ? WHERE id = ?";
+			pstmt = conn.prepareStatement(query);
+			
+			int index = 1;
+			Date myDate = DateConverter.stringToDateForWrite(flight.getDateComing());
+			java.sql.Date date = new java.sql.Date(myDate.getTime());
+			pstmt.setDate(index++, date);
+			pstmt.setInt(index++, flight.getGoingAirport().getId());
+			pstmt.setInt(index++, flight.getComingAirport().getId());
+			pstmt.setInt(index++, flight.getSeatNumber());
+			pstmt.setDouble(index++, flight.getPriceTicket());
+			pstmt.setBoolean(index++, flight.isDeleted());
+			pstmt.setInt(index++, flight.getId());
+			
+			
+			return pstmt.executeUpdate() == 1;	
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+		}
+
+		return false;
 	}
 
 }

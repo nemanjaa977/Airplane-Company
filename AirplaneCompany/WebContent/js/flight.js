@@ -46,13 +46,14 @@ $(document).ready(function() {
 		$('#readCominDate').text(data.flight.comingAirport.name);
 		$('#readPriceTicket').text(data.flight.priceTicket + " $");
 		
-		$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-ticket-alt'></i>  Take a ticket</button>");
+		if(data.logged != null){
+			$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-ticket-alt'></i>  Take a ticket</button>");
+		}
 	
 		if(data.logged.role == 'ADMIN'){
 			$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-primary editFlightButton'><i class='far fa-edit'></i>  Edit</button>" +
 					"<button type='button' id='"+data.flight.id+"' class='btn btn-danger'><i class='fas fa-trash'></i>  Delete</button>");
 			
-			$('#editFlightByAdmin').append();
 		}
 		
 	});
@@ -112,13 +113,51 @@ $(document).ready(function() {
 			$('#inputFlightNumber').val(data.flight.number);
 			$('#dateGoing').val(data.flight.dateGoing);
 			$('#dateComing').val(data.flight.dateComing);
-//			$('#goingAirport').val(data.flight.goingAirport.id);
-//			$('#comingAirport').val(data.flight.comingAirport.id);
 			$('#inputSeatNumber').val(data.flight.seatNumber);
 			$('#inputPriceTicket').val(data.flight.priceTicket);
 			
+			$('#goingAirport').val(data.flight.goingAirport.id);
+			$('#comingAirport').val(data.flight.comingAirport.id);
+			
 		});
 		
+		
+		event.preventDefault();
+		return false;
+	});
+
+	// click edit submit button flight
+	$(document).on('click',"#editFlightSubmit", function(event){
+		var dateComingForEdit = $('#dateComing').val();
+		var seatNumberForEdit = $('#inputSeatNumber').val();
+		var priceTicketForEdit = $('#inputPriceTicket').val();
+		var goingAirportForEdit = $('#goingAirport').val();
+		var comingAirportForEdit = $('#comingAirport').val();
+		
+		var json = {
+				'status': 'edit',
+				'id': flightId,
+				'dateC': dateComingForEdit,
+				'airportG': goingAirportForEdit,
+				'airportC': comingAirportForEdit,
+				'seatNumber': seatNumberForEdit,
+				'price': priceTicketForEdit
+		};
+		var datee = new Date();
+		console.log(datee);
+		var dateComigConvert = new Date(dateComingForEdit);
+		console.log(dateComigConvert);
+		
+		if(dateComigConvert > datee){
+			$.post('FlightServlet',json,function(data){
+				if(data.status == "success"){
+					var location="flight.html?id="+flightId;
+					window.location.replace(location);
+				}
+			});
+		}else{
+			alert('False date for coming!');
+		}
 		
 		event.preventDefault();
 		return false;
