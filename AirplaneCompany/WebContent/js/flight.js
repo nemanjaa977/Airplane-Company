@@ -4,6 +4,8 @@ $(document).ready(function() {
 	var navUser = $('#navLogged');
 	var flightId = window.location.search.slice(1).split('&')[0].split('=')[1];
 	
+	var dateGoingForEdit = null;
+	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
 		if(data.logged != null){
@@ -119,6 +121,8 @@ $(document).ready(function() {
 			$('#goingAirport').val(data.flight.goingAirport.id);
 			$('#comingAirport').val(data.flight.comingAirport.id);
 			
+			dateGoingForEdit = data.flight.dateGoing;
+			
 		});
 		
 		
@@ -143,12 +147,12 @@ $(document).ready(function() {
 				'seatNumber': seatNumberForEdit,
 				'price': priceTicketForEdit
 		};
-		var datee = new Date();
-		console.log(datee);
+		var dateGoingConvert = new Date(dateGoingForEdit);
+		console.log(dateGoingConvert);
 		var dateComigConvert = new Date(dateComingForEdit);
 		console.log(dateComigConvert);
 		
-		if(dateComigConvert > datee){
+		if(dateComigConvert > dateGoingConvert){
 			$.post('FlightServlet',json,function(data){
 				if(data.status == "success"){
 					var location="flight.html?id="+flightId;

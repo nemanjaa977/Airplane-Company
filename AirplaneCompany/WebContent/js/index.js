@@ -112,15 +112,15 @@ $(document).ready(function() {
 					'priceTicket': priceTicket
 			}
 			var date = new Date();
-			console.log(date);
-			if(dateG > dateC || dateG < date){
-				message.text("Date of going can't bigger than date of coming!");
-			}else{
+			var d = new Date(dateG);
+			if(dateC > dateG && d > date){
 				$.post('FlightServlet', json, function(data) {
 					if (data.status == 'success') {
 						window.location.replace('index.html');
 					}
 				});
+			}else{
+				message.text("Date of going can't bigger than date of coming!");
 			}
 			
 		}
