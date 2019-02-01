@@ -8,6 +8,8 @@ $(document).ready(function() {
 	var startFlight = null;
 	var endFlight = null;
 	var loggedUU = null;
+	var proceTicketForComingFlight = null;
+	var proceTicketForGoingFlight = null;
 	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
@@ -70,11 +72,11 @@ $(document).ready(function() {
 			// load seat for going flight
 			$.get('FlightServlet', {'id':oo }, function(data){
 				var f = data.flight;
+				proceTicketForGoingFlight = f.priceTicket;
 				for(var i=1;i<f.seatNumber+1;i++){
 					$('#seatOfGoingFlight').append("<option value='"+i+"'>"+i+"</option>");
 				}
 				
-				$('#priceForOneTicket').text(f.priceTicket + '$'); // price ticket for going flight 
 		    });
 			
 			$('#sale_3').fadeIn();
@@ -83,24 +85,26 @@ $(document).ready(function() {
 			var goinggAirport;
 			var cominggDate;
 			$.get('FlightServlet', {}, function(data){
+				var flights=data.flights;
 				$.get('FlightServlet', {'id':startFlight}, function(data){
 					var f2 = data.flight
 					cominggAirport = f2.comingAirport.id;
 					goinggAirport = f2.goingAirport.id;
 					cominggDate = f2.dateComing;
+					
+					for(i in flights){
+						var f = flights[i];
+								if(f.goingAirport.id == cominggAirport && f.comingAirport.id == goinggAirport && f.dateGoing > cominggDate){
+							$('#tbody_3').append("<tr>" +
+								      "<td>"+f.number+"</td>" +
+								      "<td>"+f.dateGoing+"</td>" +
+								      "<td>"+f.goingAirport.name+"</td>" +
+								      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeAirportComing'><i class='fas fa-check'></i> Check</button></td>" +
+								    "</tr>");
+						}
+					}
 
 				});
-				for(i in data.flights){
-					var f = data.flights[i];
-//					if(f.goingAirport.id == cominggAirport && f.comingAirport.id == goinggAirport && f.dateGoing > cominggDate){
-						$('#tbody_3').append("<tr>" +
-							      "<td>"+f.number+"</td>" +
-							      "<td>"+f.dateGoing+"</td>" +
-							      "<td>"+f.goingAirport.name+"</td>" +
-							      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeAirportComing'><i class='fas fa-check'></i> Check</button></td>" +
-							    "</tr>");
-//					}
-				}
 			});
 			
 			$('.takeTicketFlight').prop('disabled', true);
@@ -116,12 +120,18 @@ $(document).ready(function() {
 			// load seat for coming flight
 			$.get('FlightServlet', {'id':ooo }, function(data){
 				var f = data.flight;
+				proceTicketForComingFlight = f.priceTicket;
 				for(var i=1;i<f.seatNumber+1;i++){
 					$('#seatOfComingFlight').append("<option value='"+i+"'>"+i+"</option>");
 				}
 		    });
 			
 			$('.takeAirportComing').prop('disabled', true);
+			
+			var totalPrice = proceTicketForComingFlight + proceTicketForGoingFlight;
+			console.log(proceTicketForGoingFlight);
+			console.log(proceTicketForComingFlight);
+			$('#priceForOneTicket').text(totalPrice + '$'); // price ticket for going flight 
 				
 			$('#sale_4').fadeIn();
 			$('#sale_5').fadeIn();
@@ -132,7 +142,6 @@ $(document).ready(function() {
 		
 		// click to reservation ticket
 		$(document).on('click',"#reservationnSubmit", function(event){
-			
 			var firstName = $("#firstNamePass").val();
 			var namePass = $("#lastNamePass").val();
 			

@@ -35,7 +35,7 @@ public class TicketServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			logged = (User) session.getAttribute("loggedUser");
 			
-			String text = request.getParameter("text");
+			String text = request.getParameter("id");
 			if(text == null) {
 				tickets = TicketDAO.getAll();
 			}else {
@@ -109,6 +109,26 @@ public class TicketServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(jsonData);
 			
+		}else if(status.equals("buy")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			Date d = new Date();
+			String date = DateConverter.dateToStringForWrite(d);
+			
+			ReservationTicket t = TicketDAO.getOne(id);
+			t.setDateOfSaleTicket(date);
+			t.setDateReservation(null);
+			
+			TicketDAO.update(t);
+			
+			Map<String, Object> data = new HashMap<>();		
+			data.put("status", "success");
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
 		}
 		
 	}

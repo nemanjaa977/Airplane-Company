@@ -200,5 +200,52 @@ public class TicketDAO {
 
 		return false;
 	}
+	
+	public static boolean update(ReservationTicket ticket) {
+		Connection conn = ConnectionManager.getConnection();	
+		PreparedStatement pstmt = null;
+		try {
+			String query = "UPDATE tickets SET goingFlight = ?, reverseFlight = ?, seatOnGoingFlight = ?, seatOnReverseFlight = ?, dateReservation = ?, dateOfSaleTicket = ?,"
+					+ "userCreateReservationOrSaleTicket = ?, firstNamePassenger = ?, lastNamePassenger = ? WHERE id = ?";	
+			pstmt = conn.prepareStatement(query);
+			
+			int index = 1;
+			pstmt.setInt(index++, ticket.getGoingFlight().getId());
+			pstmt.setInt(index++, ticket.getReverseFlight().getId());
+			pstmt.setInt(index++, ticket.getSeatOnGoingFlight());
+			pstmt.setInt(index++, ticket.getSeatOnReverseFlight());
+			Date myDate;
+			java.sql.Date date;
+			if(ticket.getDateReservation() !=null) {
+				myDate= DateConverter.stringToDateForWrite(ticket.getDateReservation());
+				date = new java.sql.Date(myDate.getTime());
+			}else {
+				date=null;
+			}
+			pstmt.setDate(index++, date);
+			Date myDate2;
+			java.sql.Date date2;
+			if(ticket.getDateOfSaleTicket() != null) {
+				myDate2 = DateConverter.stringToDateForWrite(ticket.getDateOfSaleTicket()); 
+				date2 = new java.sql.Date(myDate2.getTime());
+			}else {
+				date2 = null;
+			}		
+			pstmt.setDate(index++, date2);
+			pstmt.setInt(index++, ticket.getUserCreateReservationOrSaleTicket().getId());
+			pstmt.setString(index++, ticket.getFirstNamePassenger());
+			pstmt.setString(index++, ticket.getLastNamePassenger());
+			pstmt.setInt(index++, ticket.getId());
+			
+			return pstmt.executeUpdate() == 1;
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+		}
+
+		return false;
+	}
 
 }

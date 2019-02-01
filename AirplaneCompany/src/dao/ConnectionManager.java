@@ -8,7 +8,7 @@ public class ConnectionManager {
 	
 	private static final String DATABASE = "localhost:3306/airplanes";
 	private static final String USER_NAME = "root";
-	private static final String PASSWORD = "nemanja1997";	
+	private static final String PASSWORD = "root";	
 
 	private static Connection connection;
 

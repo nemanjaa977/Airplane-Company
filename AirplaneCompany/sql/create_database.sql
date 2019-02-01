@@ -29,7 +29,7 @@ INSERT INTO users (username, password, dateRegistration, role) VALUES ('mare', '
 INSERT INTO users (username, password, dateRegistration, role) VALUES ('zare', '123', '2018-8-2', 'REGISTERED_USER');
 
 CREATE TABLE flights (
-	id BIGINT AUTO_INCREMENT,
+	id BIGINT AUTO_INCREMENT NOT NULL,
 	numberF VARCHAR(10) NOT NULL,
 	dateGoing DATE NOT NULL,
 	dateComing DATE NOT NULL,
