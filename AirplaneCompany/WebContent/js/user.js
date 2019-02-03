@@ -23,7 +23,7 @@ $(document).ready(function() {
 		
 		if(data.logged != null){
 			nav.append("<li class='nav-item'>" +
-							"<a class='nav-link' href='addTicket.html'>Reservation/Sale ticket</a>" +
+							"<a class='nav-link' id='rsTiket' href='addTicket.html'>Reservation/Sale ticket</a>" +
 					   "</li>" +
 					   "<li class='nav-item dropdown'>" +
 					   		"<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Profile</a>" +
@@ -42,6 +42,13 @@ $(document).ready(function() {
 			   					  "<button type='button' class='btn btn-danger deleteButton' id='"+userID+"'><i class='fas fa-trash'></i> Delete</button>");
 			}
 			
+			//can't delete himself and blocked
+			if(data.logged.id == userID){
+				$('.blockButton').hide();
+				$('.deleteButton').hide();
+				$('.unblockButton').hide();
+			}
+			
 			if(data.user.id == userID){
 				console.log(data.user.id);
 				if(data.user.blocked == true){
@@ -49,6 +56,11 @@ $(document).ready(function() {
 				}else{
 					$('.unblockButton').hide();
 				}
+			}
+			
+			if(data.logged.blocked == true){
+				$('#rsTiket').hide();
+				$('.editButton').hide();
 			}
 			
 			//click open edit div

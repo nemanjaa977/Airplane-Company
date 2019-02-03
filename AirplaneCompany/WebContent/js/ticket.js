@@ -13,7 +13,7 @@ $(document).ready(function() {
 		console.log('Logged: ' + data.logged);
 		if(data.logged != null){
 			nav.append("<li class='nav-item'>" +
-							"<a class='nav-link' href='addTicket.html'>Reservation/Sale ticket</a>" +
+							"<a class='nav-link' id='rsTiket' href='addTicket.html'>Reservation/Sale ticket</a>" +
 					   "</li>" +
 					   "<li class='nav-item dropdown'>" +
 					   		"<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Profile</a>" +
@@ -33,8 +33,20 @@ $(document).ready(function() {
 	
 	$.get('TicketServlet', {'id': ticketId}, function(data){
 		
-			goingFlightForLoadSeat = data.ticket.goingFlight.id;
-			comingFlightForLoadSeat = data.ticket.reverseFlight.id;
+			
+			if(data.ticket.goingFlight == null){
+				alert('This flight was deleted!');
+				$('#oneTicket').hide();
+			}else{
+				goingFlightForLoadSeat = data.ticket.goingFlight.id;
+			}
+			
+			if(data.ticket.reverseFlight == null){
+				alert('This flight was deleted!');
+				$('#oneTicket').hide();
+			}else {
+				comingFlightForLoadSeat = data.ticket.reverseFlight.id;
+			}
 			
 			$('#goingFlight').text('#' + data.ticket.goingFlight.id);
 			$('#goingFlight').attr("href", "flight.html?id="+data.ticket.goingFlight.id);
@@ -48,7 +60,7 @@ $(document).ready(function() {
 			$('#userr').attr("href", "user.html?id="+data.ticket.userCreateReservationOrSaleTicket.id);
 			$('#namePass').text(data.ticket.firstNamePassenger);
 			$('#lastnamePass').text(data.ticket.lastNamePassenger);
-			$('#proceTT').text("Price $");
+			$('#proceTT').text(data.price + " $");
 			
 			if(data.logged != null){
 				if(data.ticket.dateReservation != null){
@@ -65,6 +77,13 @@ $(document).ready(function() {
 			
 			if(data.ticket.dateOfSaleTicket != null){
 				$('#dateReservation').text('---');
+				$('.editTicketButton').hide();
+				$('.deleteTicketButton').hide();
+			}
+			
+			if(data.logged.blocked == true){
+				$('#rsTiket').hide();
+				$('.buyTicket').hide();
 				$('.editTicketButton').hide();
 				$('.deleteTicketButton').hide();
 			}
@@ -155,12 +174,17 @@ $(document).ready(function() {
 				'id': ticketId
 		}
 		
-		$.post('TicketServlet',json,function(data){
-			if(data.status == "success"){
-				var location="index.html";
-				window.location.replace(location);
-			}
-		});
+		var x=confirm("Are you shure ?");
+		if(x){
+			$.post('TicketServlet',json,function(data){
+				if(data.status == "success"){
+					var location="index.html";
+					window.location.replace(location);
+				}
+			});
+		}else{
+			return ;
+		}
 		
 		event.preventDefault();
 		return false;

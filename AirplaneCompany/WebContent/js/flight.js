@@ -10,7 +10,7 @@ $(document).ready(function() {
 		console.log('Logged: ' + data.logged);
 		if(data.logged != null){
 			nav.append("<li class='nav-item'>" +
-							"<a class='nav-link' href='addTicket.html'>Reservation/Sale ticket</a>" +
+							"<a class='nav-link' id='rsTiket' href='addTicket.html'>Reservation/Sale ticket</a>" +
 					   "</li>" +
 					   "<li class='nav-item dropdown'>" +
 					   		"<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> Profile</a>" +
@@ -35,6 +35,7 @@ $(document).ready(function() {
 						   		"<a class='nav-link' href='register.html'>Register</a>" +
 						   "</li>");
 		}
+		
 	});
 	
 	$.get('FlightServlet', {'id': flightId}, function(data){
@@ -54,8 +55,13 @@ $(document).ready(function() {
 	
 		if(data.logged.role == 'ADMIN'){
 			$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-primary editFlightButton'><i class='far fa-edit'></i>  Edit</button>" +
-					"<button type='button' id='"+data.flight.id+"' class='btn btn-danger'><i class='fas fa-trash'></i>  Delete</button>");
+					"<button type='button' id='"+data.flight.id+"' class='btn btn-danger deleteFlightt'><i class='fas fa-trash'></i>  Delete</button>");
 			
+		}
+		
+		if(data.logged.blocked == true){
+			$('#rsTiket').hide();
+			$('.takeTicketFlight').hide();
 		}
 		
 	});
@@ -169,6 +175,21 @@ $(document).ready(function() {
 	
 	$(document).on('click',"#closeEditForm", function(event){
 		$('#formEditFlight').fadeOut();
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	$(document).on('click',".deleteFlightt", function(event){
+		var json = {
+				'status': 'delete',
+				'id': flightId
+		}
+		$.post('FlightServlet',json,function(data){
+			if(data.status == "success"){
+				window.location.replace("index.html");
+			}
+		});
 		
 		event.preventDefault();
 		return false;

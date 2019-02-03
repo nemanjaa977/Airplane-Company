@@ -62,9 +62,10 @@ public class FlightDAO {
 		ResultSet rset = null;
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		try {
-			String query = "SELECT * FROM flights";
+			String query = "SELECT * FROM flights WHERE deleted = ?";
 
-			pstmt = conn.prepareStatement(query);	
+			pstmt = conn.prepareStatement(query);
+			pstmt.setBoolean(1, false);	
 			rset = pstmt.executeQuery();
 
 			 while(rset.next()) {
@@ -104,9 +105,9 @@ public class FlightDAO {
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		ResultSet rset = null;
 		try {
-			String query = "SELECT DISTINCT id, numberF, dateGoing, dateComing, goingAirport, comingAirport, seatNumber, priceTicket, deleted FROM flights "
-					+ " WHERE numberF LIKE '%" +inputText+ "%' OR dateGoing LIKE '%" +inputText+ "%' OR dateComing LIKE '%" +inputText+ "%' OR goingAirport LIKE '%" +inputText+ "%'"
-					+ " OR comingAirport LIKE '%" +inputText+ "%' OR priceTicket LIKE '%" +inputText+ "%' ";
+			String query = "SELECT DISTINCT f.id, f.numberF, f.dateGoing, f.dateComing, f.goingAirport, f.comingAirport, f.seatNumber, f.priceTicket, f.deleted FROM flights f JOIN  airports a ON f.goingAirport = a.id OR f.comingAirport = a.id "
+					+ " WHERE (f.numberF LIKE '%" +inputText+ "%' OR f.dateGoing LIKE '%" +inputText+ "%' OR f.dateComing LIKE '%" +inputText+ "%' "
+					+ " OR a.name LIKE '%" +inputText+ "%' OR f.priceTicket LIKE '%" +inputText+ "%') AND f.deleted = 0 ";
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {

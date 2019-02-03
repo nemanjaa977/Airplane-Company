@@ -15,9 +15,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.AirportDAO;
 import dao.FlightDAO;
+import dao.TicketDAO;
 import dao.UserDAO;
 import model.Airport;
 import model.Flight;
+import model.ReservationTicket;
 import model.User;
 import model.User.Role;
 
@@ -120,6 +122,30 @@ public class FlightServlet extends HttpServlet {
 			flight.setComingAirport(a2);
 			flight.setSeatNumber(seatNumer);
 		    flight.setPriceTicket(priceT);
+		    
+			FlightDAO.update(flight);
+			Map<String, Object> data = new HashMap<>();
+			
+			data.put("status", "success");
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
+			
+		}else if(status.equals("delete")) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			ArrayList<ReservationTicket> ticketsForDelete=TicketDAO.getAllForOneFlightForDelete(id);
+			
+			for (ReservationTicket reservationTicket : ticketsForDelete) {
+				TicketDAO.delete(reservationTicket.getId());
+			}
+			
+			Flight flight = FlightDAO.getOne(id);
+			flight.setDeleted(true);
 		    
 			FlightDAO.update(flight);
 			Map<String, Object> data = new HashMap<>();

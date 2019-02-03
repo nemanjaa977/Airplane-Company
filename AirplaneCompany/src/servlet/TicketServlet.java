@@ -32,6 +32,7 @@ public class TicketServlet extends HttpServlet {
 		User logged = null;
 		ArrayList<ReservationTicket> tickets = null;
 		ReservationTicket ticket = null;
+		double price=0;
 		
 		try {
 			HttpSession session = request.getSession();
@@ -43,6 +44,9 @@ public class TicketServlet extends HttpServlet {
 			}else {
 				int id = Integer.parseInt(text);
 				ticket = TicketDAO.getOne(id);
+				Flight f1=FlightDAO.getOne(ticket.getGoingFlight().getId());
+				Flight f2=FlightDAO.getOne(ticket.getReverseFlight().getId());
+				price= f1.getPriceTicket()+f2.getPriceTicket();
 			}
 			
 
@@ -54,6 +58,7 @@ public class TicketServlet extends HttpServlet {
 		data.put("logged", logged);
 		data.put("tickets", tickets);
 		data.put("ticket", ticket);
+		data.put("price", price);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);
@@ -93,17 +98,20 @@ public class TicketServlet extends HttpServlet {
 			Date d = new Date();
 			String date = DateConverter.dateToStringForWrite(d);
 			
+			ReservationTicket ticket = null;
+			
 			if(typeCard.equals("reservation")) {
-				ReservationTicket ticket = new ReservationTicket(idd, f, f2, seatGGGG, seatCCCC, date, null, u, firstNameP, lastNameP);
+				ticket = new ReservationTicket(idd, f, f2, seatGGGG, seatCCCC, date, null, u, firstNameP, lastNameP);
 				TicketDAO.create(ticket);
 			}else {
-				ReservationTicket ticket = new ReservationTicket(idd, f, f2, seatGGGG, seatCCCC, null, date, u, firstNameP, lastNameP);
+				ticket = new ReservationTicket(idd, f, f2, seatGGGG, seatCCCC, null, date, u, firstNameP, lastNameP);
 				TicketDAO.create(ticket);
 			}
 			
 			Map<String, Object> data = new HashMap<>();
 			
 			data.put("status", "success");
+			data.put("ticket", ticket);
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonData = mapper.writeValueAsString(data);
 			System.out.println(jsonData);

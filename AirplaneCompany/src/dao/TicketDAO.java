@@ -267,5 +267,60 @@ public class TicketDAO {
 		}
 
 	}
+	
+	public static ArrayList<ReservationTicket> getAllForOneFlightForDelete(int flightId) {
+		
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<ReservationTicket> tickets = new ArrayList<ReservationTicket>();
+		try {
+			String query = "SELECT * FROM  tickets t JOIN flights f ON t.goingFlight = f.goingAirport WHERE f.id = ? AND NOT ISNULL(t.dateReservation);";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, flightId);
+			rset = pstmt.executeQuery();
+
+			 while(rset.next()) {
+				int index = 1;
+				Integer id = rset.getInt(index++);
+				Integer flightGoing = rset.getInt(index++);
+				Flight fg = FlightDAO.getOne(flightGoing);
+				Integer flightComing = rset.getInt(index++);
+				Flight fc = FlightDAO.getOne(flightComing);
+				Integer seatOfGoingF = rset.getInt(index++);
+				Integer seatOfComingF = rset.getInt(index++);
+				
+				Date dateReservation = rset.getDate(index++);
+				String dc = null;
+				if(dateReservation != null) {
+					dc = DateConverter.dateToString(dateReservation);
+				}
+								
+				Date dateSale = rset.getDate(index++);
+				String ds = null;
+				if(dateSale != null) {
+					ds = DateConverter.dateToString(dateSale);
+				}
+						
+				Integer userID = rset.getInt(index++);
+				User u = UserDAO.getOneId(userID);
+				String firstnameP = rset.getString(index++);
+				String lastNameP = rset.getString(index++);
+				
+				tickets.add(new ReservationTicket(id, fg, fc, seatOfGoingF, seatOfComingF, dc, ds, u, firstnameP, lastNameP));
+				
+			}
+			 return tickets;
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+		}
+
+		return null;
+	}
 
 }
