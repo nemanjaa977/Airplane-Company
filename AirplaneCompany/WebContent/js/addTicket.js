@@ -8,8 +8,8 @@ $(document).ready(function() {
 	var startFlight = null;
 	var endFlight = null;
 	var loggedUU = null;
-	var proceTicketForComingFlight = null;
 	var proceTicketForGoingFlight = null;
+	var priceTicketForComingFlight = null;
 	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
@@ -41,7 +41,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	if(flightId != null){
+	if(flightId != null){ // vec izabran polazni let
 		$.get('FlightServlet', {'id':flightId }, function(data){
 				var f = data.flight;
 				$('#tbody_1').append("<tr>" +
@@ -53,7 +53,7 @@ $(document).ready(function() {
 								    "</tr>");
 		});
 		
-	}else{
+	}else{ // bira se polazni let
 		$.get('FlightServlet', {}, function(data){
 			for(i in data.flights){
 				var f = data.flights[i];
@@ -71,10 +71,12 @@ $(document).ready(function() {
 		$(document).on('click',".takeTicketFlight", function(event){
 			var oo = $(this).attr('id');
 			startFlight = oo;
+			
 			// load seat for going flight
 			$.get('FlightServlet', {'id':oo }, function(data){
 				var f = data.flight;
 				proceTicketForGoingFlight = f.priceTicket;
+
 				for(var i=1;i<f.seatNumber+1;i++){
 					$('#seatOfGoingFlight').append("<option value='"+i+"'>"+i+"</option>");
 				}
@@ -123,18 +125,17 @@ $(document).ready(function() {
 			// load seat for coming flight
 			$.get('FlightServlet', {'id':ooo }, function(data){
 				var f = data.flight;
-				proceTicketForComingFlight = f.priceTicket;
+				priceTicketForComingFlight = f.priceTicket;
+				
 				for(var i=1;i<f.seatNumber+1;i++){
 					$('#seatOfComingFlight').append("<option value='"+i+"'>"+i+"</option>");
 				}
+				
+				var totalPrice = proceTicketForGoingFlight + priceTicketForComingFlight;
+				$('#priceForOneTicket').text(totalPrice + '$');
 		    });
 			
 			$('.takeAirportComing').prop('disabled', true);
-			
-			var totalPrice = proceTicketForComingFlight + proceTicketForGoingFlight;
-			console.log(proceTicketForGoingFlight);
-			console.log(proceTicketForComingFlight);
-			$('#priceForOneTicket').text(totalPrice + '$'); // price ticket for going flight 
 				
 			$('#sale_4').fadeIn();
 			$('#sale_5').fadeIn();
