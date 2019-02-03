@@ -48,6 +48,7 @@ $(document).ready(function() {
 								      "<td>"+f.number+"</td>" +
 								      "<td>"+f.dateGoing+"</td>" +
 								      "<td>"+f.goingAirport.name+"</td>" +
+								      "<td>"+f.comingAirport.name+"</td>" +
 								      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeTicketFlight' disabled><i class='fas fa-check'></i> Check</button></td>" +
 								    "</tr>");
 		});
@@ -60,6 +61,7 @@ $(document).ready(function() {
 								      "<td>"+f.number+"</td>" +
 								      "<td>"+f.dateGoing+"</td>" +
 								      "<td>"+f.goingAirport.name+"</td>" +
+								      "<td>"+f.comingAirport.name+"</td>" +
 								      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-check'></i> Check</button></td>" +
 								    "</tr>");
 			}	
@@ -99,6 +101,7 @@ $(document).ready(function() {
 								      "<td>"+f.number+"</td>" +
 								      "<td>"+f.dateGoing+"</td>" +
 								      "<td>"+f.goingAirport.name+"</td>" +
+								      "<td>"+f.comingAirport.name+"</td>" +
 								      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeAirportComing'><i class='fas fa-check'></i> Check</button></td>" +
 								    "</tr>");
 						}

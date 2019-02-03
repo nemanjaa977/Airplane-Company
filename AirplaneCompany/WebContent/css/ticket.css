@@ -46,3 +46,18 @@
 	text-decoration: none;
 	cursor: pointer;
 }
+
+#editTitle {
+	margin-top: 30px;
+	text-align: center;
+	font-size: 25px;
+	border-bottom: 1px solid gray;
+}
+
+#firsEditSeat {
+	margin-top: 20px;
+}
+
+#editDiv {
+	display: none;
+}

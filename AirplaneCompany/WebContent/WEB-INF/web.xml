@@ -89,4 +89,14 @@
     <servlet-name>TicketServlet</servlet-name>
     <url-pattern>/TicketServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchUserServlet</display-name>
+    <servlet-name>SearchUserServlet</servlet-name>
+    <servlet-class>servlet.SearchUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchUserServlet</servlet-name>
+    <url-pattern>/SearchUserServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -77,5 +77,32 @@
 			</table>
 			<div class='col-12' id='divButton'></div>
 		</div>
+		<div class="container-fluid col-md-6" id='editDiv'>
+			 <p id='editTitle'>Edit ticket</p>
+	         <div class="form-row" id='firsEditSeat'>
+	        	<div class="form-group col-md-6">
+				    <label for="seatOfGoingFlight">Seat of going flight</label>
+				    <select class="form-control" id="seatOfGoingFlight">
+				    </select>
+				 </div>
+		         <div class="form-group col-md-6">
+				    <label for="seatOfComingFlight">Seat of coming flight</label>
+				    <select class="form-control" id="seatOfComingFlight">
+				    </select>
+				 </div>
+	        </div>
+            <div class="form-row">
+	        	<div class="form-group col-md-6">
+	                <label for="firstNamePass" id='labela'>First name passenger</label>
+	                <input type="text" class="form-control" id="firstNamePass">
+	            </div>
+	            <div class="form-group col-md-6">
+	                <label for="lastNamePass" id='labela'>Last name passenger</label>
+	                <input type="text" class="form-control" id="lastNamePass">
+	            </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitTicket">Submit</button>
+			<button type="button" class="btn btn-light" id="closeEdit">Close</button>
+		</div>
 	</body>
 </html>

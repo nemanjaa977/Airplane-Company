@@ -247,5 +247,25 @@ public class TicketDAO {
 
 		return false;
 	}
+	
+	public static void delete(int id) {
+		Connection conn = ConnectionManager.getConnection();	
+		PreparedStatement pstmt = null;
+
+		try {
+			String query = "DELETE FROM tickets WHERE id = ?";	
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+		}
+
+	}
 
 }

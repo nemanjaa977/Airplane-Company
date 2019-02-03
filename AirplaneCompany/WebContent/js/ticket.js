@@ -6,6 +6,9 @@ $(document).ready(function() {
 	
 	var dateGoingForEdit = null;
 	
+	var goingFlightForLoadSeat = null;
+	var comingFlightForLoadSeat = null;
+	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
 		if(data.logged != null){
@@ -29,6 +32,9 @@ $(document).ready(function() {
 	});
 	
 	$.get('TicketServlet', {'id': ticketId}, function(data){
+		
+			goingFlightForLoadSeat = data.ticket.goingFlight.id;
+			comingFlightForLoadSeat = data.ticket.reverseFlight.id;
 			
 			$('#goingFlight').text('#' + data.ticket.goingFlight.id);
 			$('#goingFlight').attr("href", "flight.html?id="+data.ticket.goingFlight.id);
@@ -74,6 +80,86 @@ $(document).ready(function() {
 		
 		$.post('TicketServlet',json,function(data){
 			window.location.reload();
+		});
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	$(document).on('click',".editTicketButton", function(event){
+		
+		$.get('FlightServlet', {'id': goingFlightForLoadSeat }, function(data){
+			var f = data.flight;
+			for(var i=1;i<f.seatNumber+1;i++){
+				$('#seatOfGoingFlight').append("<option value='"+i+"'>"+i+"</option>");
+			}		
+	    });
+		$.get('FlightServlet', {'id': comingFlightForLoadSeat}, function(data){
+			var f = data.flight;
+			for(var i=1;i<f.seatNumber+1;i++){
+				$('#seatOfComingFlight').append("<option value='"+i+"'>"+i+"</option>");
+			}
+	    });
+		
+		$.get('TicketServlet', {'id': ticketId}, function(data){
+			$('#firstNamePass').val(data.ticket.firstNamePassenger);
+			$('#lastNamePass').val(data.ticket.lastNamePassenger);
+			$('#seatOfGoingFlight').val(data.ticket.seatOnGoingFlight);
+			$('#seatOfComingFlight').val(data.ticket.seatOnReverseFlight);
+			console.log(data);
+		});
+		
+		$('#editDiv').fadeIn();
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	$(document).on('click',"#closeEdit", function(event){
+		$('#editDiv').fadeOut();
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	$(document).on('click',"#submitTicket", function(event){
+		var newFirstName = $('#firstNamePass').val();
+		var newLastName = $('#lastNamePass').val();
+		var newSeatForGoing = $('#seatOfGoingFlight').val();
+		var newSeatForComing = $('#seatOfComingFlight').val();
+		
+		var json = {
+				'status': 'edit',
+				'id': ticketId,
+				'firstNamePassenger': newFirstName,
+				'lastNamePassenger': newLastName,
+				'seatForGoing': newSeatForGoing,
+				'seatForComing': newSeatForComing
+		}
+		
+		$.post('TicketServlet',json,function(data){
+			if(data.status == "success"){
+				var location="ticket.html?id="+ticketId;
+				window.location.replace(location);
+			}
+		});
+		
+		event.preventDefault();
+		return false;
+	});
+	
+	$(document).on('click',".deleteTicketButton", function(event){
+		
+		var json = {
+				'status': 'delete',
+				'id': ticketId
+		}
+		
+		$.post('TicketServlet',json,function(data){
+			if(data.status == "success"){
+				var location="index.html";
+				window.location.replace(location);
+			}
 		});
 		
 		event.preventDefault();

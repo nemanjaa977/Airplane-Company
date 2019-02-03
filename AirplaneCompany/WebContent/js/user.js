@@ -172,12 +172,12 @@ $(document).ready(function() {
 			});
 			
 			// all reservation or buy ticket for user
-			if(data.logged.id == data.user.id){
+			if(data.logged.id == data.user.id || data.logged.role == "ADMIN"){
 				$.get('TicketServlet', {}, function(data){
 					console.log(data);
 					for(i in data.tickets){
 						var t = data.tickets[i];
-						if(t.userCreateReservationOrSaleTicket.id == data.logged.id){
+						if(t.userCreateReservationOrSaleTicket.id == userID){
 							$('#tbody_2').append("<tr id="+t.id+">" +
 								      "<td><a href='ticket.html?id="+t.id+"' class='dateRRR'>"+t.dateReservation+"</a></td>" +
 								      "<td><a href='ticket.html?id="+t.id+"' class='dateSSS'>"+t.dateOfSaleTicket+"</a></td>" +
@@ -206,6 +206,9 @@ $(document).ready(function() {
 								dater.removeAttr('href');
 							}
 						}
+						
+						
+						
 					}
 				});
 				$('#allReservationTicketByUser').show();

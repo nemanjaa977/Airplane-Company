@@ -64,8 +64,8 @@ CREATE TABLE tickets (
 	firstNamePassenger VARCHAR(20) NOT NULL,
 	lastNamePassenger VARCHAR(20) NOT NULL,
 	PRIMARY KEY(id),
-	FOREIGN KEY (goingFlight) REFERENCES airports(id) ON DELETE RESTRICT,
-	FOREIGN KEY (reverseFlight) REFERENCES airports(id) ON DELETE RESTRICT
+	FOREIGN KEY (goingFlight) REFERENCES flights(id) ON DELETE RESTRICT,
+	FOREIGN KEY (reverseFlight) REFERENCES flights(id) ON DELETE RESTRICT
 );
 
 INSERT INTO tickets (goingFlight, reverseFlight, seatOnGoingFlight, seatOnReverseFlight, dateReservation, dateOfSaleTicket, userCreateReservationOrSaleTicket, firstNamePassenger, lastNamePassenger)

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import model.Airport;
+import model.Flight;
 import model.User;
 import model.User.Role;
 
@@ -216,6 +218,41 @@ public class UserDAO {
 			}
 		}
 		return 0;
+	}
+	
+	public static ArrayList<User> getSearchAll(String inputText) {
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ArrayList<User> users = new ArrayList<User>();
+		ResultSet rset = null;
+		try {
+			String query = "SELECT DISTINCT id, username, password, dateRegistration, role, blocked, deleted FROM users "
+					+ " WHERE username LIKE '%" +inputText+ "%' OR role LIKE '%" +inputText+ "%' ";
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				int index = 1;
+				Integer id = rset.getInt(index++);
+				String username = rset.getString(index++);
+				String password = rset.getString(index++);
+				Date date = rset.getDate(index++);
+				String dateRegistration = DateConverter.dateToString(date);
+				Role role = Role.valueOf(rset.getString(index++));
+				boolean blocked = rset.getBoolean(index++);
+				boolean deleted = rset.getBoolean(index++);
+				
+				users.add(new User(id, username, password, dateRegistration, role, blocked, deleted));
+			}
+	
+			return users;
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+		}
+		return null;
 	}
 	
 

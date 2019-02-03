@@ -14,10 +14,12 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dao.AirportDAO;
 import dao.DateConverter;
 import dao.FlightDAO;
 import dao.TicketDAO;
 import dao.UserDAO;
+import model.Airport;
 import model.Flight;
 import model.ReservationTicket;
 import model.User;
@@ -129,6 +131,52 @@ public class TicketServlet extends HttpServlet {
 
 			response.setContentType("application/json");
 			response.getWriter().write(jsonData);
+			
+		}else if(status.equals("edit")) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+	    
+		    String seatForGoingFlight = request.getParameter("seatForGoing");
+		    int seat1 = Integer.parseInt(seatForGoingFlight);
+		    String seatForComingFlight = request.getParameter("seatForComing");
+		    int seat2 = Integer.parseInt(seatForComingFlight);
+		    
+		    String firstNamePassenger = request.getParameter("firstNamePassenger");
+		    String lastNamePassenger = request.getParameter("lastNamePassenger");
+			
+			ReservationTicket ticket = TicketDAO.getOne(id);
+			ticket.setSeatOnGoingFlight(seat1);
+			ticket.setSeatOnReverseFlight(seat2);
+			ticket.setFirstNamePassenger(firstNamePassenger);
+			ticket.setLastNamePassenger(lastNamePassenger);
+		    
+			TicketDAO.update(ticket);
+			Map<String, Object> data = new HashMap<>();
+			
+			data.put("status", "success");
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
+			
+		}else if(status.equals("delete")) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			TicketDAO.delete(id);
+			
+			Map<String, Object> data = new HashMap<>();
+			
+			data.put("status", "success");
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonData = mapper.writeValueAsString(data);
+			System.out.println(jsonData);
+
+			response.setContentType("application/json");
+			response.getWriter().write(jsonData);
+			
 		}
 		
 	}
