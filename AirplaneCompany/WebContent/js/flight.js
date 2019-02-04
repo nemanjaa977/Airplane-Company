@@ -185,11 +185,17 @@ $(document).ready(function() {
 				'status': 'delete',
 				'id': flightId
 		}
-		$.post('FlightServlet',json,function(data){
-			if(data.status == "success"){
-				window.location.replace("index.html");
-			}
-		});
+		var x=confirm("Are you shure ?");
+		if(x){
+			$.post('FlightServlet',json,function(data){
+				if(data.status == "success"){
+					window.location.replace("index.html");
+				}
+			});
+		}else{
+			return;
+		}
+
 		
 		event.preventDefault();
 		return false;

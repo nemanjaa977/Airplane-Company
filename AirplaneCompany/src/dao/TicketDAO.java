@@ -29,9 +29,9 @@ public class TicketDAO {
 			if (rset.next()) {
 				int index = 2;	
 				Integer flightGoing = rset.getInt(index++);
-				Flight fg = FlightDAO.getOne(flightGoing);
+				Flight fg = FlightDAO.getOneForDeletedFlight(flightGoing);
 				Integer flightComing = rset.getInt(index++);
-				Flight fc = FlightDAO.getOne(flightComing);
+				Flight fc = FlightDAO.getOneForDeletedFlight(flightComing);
 				Integer seatOfGoingF = rset.getInt(index++);
 				Integer seatOfComingF = rset.getInt(index++);
 				

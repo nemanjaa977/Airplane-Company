@@ -237,5 +237,46 @@ public class FlightDAO {
 
 		return false;
 	}
+	
+	public static Flight getOneForDeletedFlight(int id) {
+		
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM flights WHERE id = ?";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, id);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				int index = 2;	
+				String number = rset.getString(index++);
+				Date date = rset.getDate(index++);
+				String dateGoing = DateConverter.dateToString(date);
+				Date date2 = rset.getDate(index++);
+				String dateComing = DateConverter.dateToString(date2);
+				Integer airportGoing = rset.getInt(index++);
+				Airport ag = AirportDAO.getOne(airportGoing);
+				Integer airportComing = rset.getInt(index++);
+				Airport ac = AirportDAO.getOne(airportComing);
+				Integer seatNumber = rset.getInt(index++);
+				Double priceTicket = rset.getDouble(index++);
+				boolean deleted = rset.getBoolean(index++);
+			
+				return new Flight(id, number, dateGoing, dateComing, ag, ac, seatNumber, priceTicket, deleted);
+			}
+			
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+		}
+
+		return null;
+	}
 
 }

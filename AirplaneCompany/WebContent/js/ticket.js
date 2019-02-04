@@ -6,9 +6,6 @@ $(document).ready(function() {
 	
 	var dateGoingForEdit = null;
 	
-	var goingFlightForLoadSeat = null;
-	var comingFlightForLoadSeat = null;
-	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
 		if(data.logged != null){
@@ -33,25 +30,11 @@ $(document).ready(function() {
 	
 	$.get('TicketServlet', {'id': ticketId}, function(data){
 		
-			
-			if(data.ticket.goingFlight == null){
-				alert('This flight was deleted!');
-				$('#oneTicket').hide();
-			}else{
-				goingFlightForLoadSeat = data.ticket.goingFlight.id;
-			}
-			
-			if(data.ticket.reverseFlight == null){
-				alert('This flight was deleted!');
-				$('#oneTicket').hide();
-			}else {
-				comingFlightForLoadSeat = data.ticket.reverseFlight.id;
-			}
+			var goingFlightForLoadSeat = data.ticket.goingFlight.id;;
+			var comingFlightForLoadSeat = data.ticket.reverseFlight.id;
 			
 			$('#goingFlight').text('#' + data.ticket.goingFlight.id);
-			$('#goingFlight').attr("href", "flight.html?id="+data.ticket.goingFlight.id);
 			$('#reverseFlight').text('#' + data.ticket.reverseFlight.id);
-			$('#reverseFlight').attr("href", "flight.html?id="+data.ticket.reverseFlight.id);
 			$('#seatGoing').text(data.ticket.seatOnGoingFlight);
 			$('#seatReverse').text(data.ticket.seatOnReverseFlight);
 			$('#dateReservation').text(data.ticket.dateReservation);
@@ -61,6 +44,11 @@ $(document).ready(function() {
 			$('#namePass').text(data.ticket.firstNamePassenger);
 			$('#lastnamePass').text(data.ticket.lastNamePassenger);
 			$('#proceTT').text(data.price + " $");
+			
+			if(data.ticket.dateOfSaleTicket == null){
+				$('#goingFlight').attr("href", "flight.html?id="+data.ticket.goingFlight.id);
+				$('#reverseFlight').attr("href", "flight.html?id="+data.ticket.reverseFlight.id);
+			}
 			
 			if(data.logged != null){
 				if(data.ticket.dateReservation != null){

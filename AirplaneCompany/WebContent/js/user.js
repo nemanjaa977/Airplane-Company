@@ -140,10 +140,15 @@ $(document).ready(function() {
 						'status': 'delete',
 						'id': userId
 				}
+				var x=confirm("Are you shure ?");
+				if(x){
+					$.post('UserServlet',json,function(data){
+						window.location.replace("users.html");
+					});
+				}else{
+					return;
+				}
 				
-				$.post('UserServlet',json,function(data){
-					window.location.replace("users.html");
-				});
 				
 				event.preventDefault();
 				return false;
