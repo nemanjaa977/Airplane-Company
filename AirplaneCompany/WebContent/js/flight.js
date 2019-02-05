@@ -17,12 +17,14 @@ $(document).ready(function() {
 				   			"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>" +
 					   			"<a class='dropdown-item' href='user.html?username="+data.logged.id+"'>My Profile</a>" +
 					   			"<a class='dropdown-item' href='users.html' id='manageUsers'>Manage Users</a>" +
+					   			"<a class='dropdown-item' href='reports.html' id='reports'>Reports</a>" +
 					   			"<div class='dropdown-divider'></div>" +
 				   				"<a class='dropdown-item' href='LogOutServlet'>Logout</a>" +
 				   			"</div>" +
 				   	   "</li>");
 			if(data.logged.role == "ADMIN"){
 				document.getElementById('manageUsers').style.display='block';
+				document.getElementById('reports').style.display='block';
 				$('#allReservationTicketByAdmin').show();
 				$('#allSoldTicketByAdmin').show();
 			}
@@ -76,11 +78,12 @@ $(document).ready(function() {
 	
 	// all reservation ticket for admin
 	$.get('TicketServlet', {}, function(data){
-		console.log(data);
+		console.log(flightId);
+		
 		for(i in data.tickets){
 			var t = data.tickets[i];
 			if(t.goingFlight.id == flightId && t.dateReservation != null){
-				$('#tbody_2').append("<tr id='allData'>" +
+				$('#tbody_2').append("<tr id='allData' class='table-light'>" +
 					      "<td><a href='ticket.html?id="+t.id+"' class='dateRR'>"+t.dateReservation+"</a></td>" +
 					      "<td id='seatSorttt'>"+t.seatOnGoingFlight+"</td>" +
 					      "<td>"+t.seatOnReverseFlight+"</td>" +
@@ -96,7 +99,7 @@ $(document).ready(function() {
 		for(i in data.tickets){
 			var t = data.tickets[i];
 			if(t.goingFlight.id == flightId && t.dateOfSaleTicket != null){
-				$('#tbody_3').append("<tr>" +
+				$('#tbody_3').append("<tr class='table-light'>" +
 					      "<td><a href='ticket.html?id="+t.id+"' class='dateSS'>"+t.dateOfSaleTicket+"</a></td>" +
 					      "<td>"+t.seatOnGoingFlight+"</td>" +
 					      "<td>"+t.seatOnReverseFlight+"</td>" +

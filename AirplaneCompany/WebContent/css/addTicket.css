@@ -1,13 +1,18 @@
-#title {
-	margin-top: 6px;
-	text-align: center;
-	text-shadow: 1px 0.5px;
-	color: gray;
-	font-size: 25px;
+body {
+	background-image: url('../photos/photo_2.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 #tab_1 {
-	font-size: 16px;
+	margin-top: 6px;
+	font-size: 22px;
+	color: white;
+	padding: 5px;
+	font-style: italic;
+	background: rgba(51,51,51,0.60) none no-repeat scroll 0 0;
+	border-radius: 5px;
 }
 
 #sale_3 {
@@ -16,12 +21,16 @@
 
 #sale_4 {
 	display: none;
+	padding: 15px;
+	background: rgba(245,245,245,0.49) none no-repeat scroll 0 0;
+	border-radius: 5px;
 }
 
 .textTTTT {
 	border-radius: 5px;
 	text-align: center;
 	border: 1px solid #333;
+	background: rgba(51,51,51,0.60) none no-repeat scroll 0 0;
 }
 
 #titleTextForPrice {
@@ -31,11 +40,16 @@
 	padding-top: 10px;
 	font-style: oblique;
 	margin-right: 5px;
+	color: white;
+}
+
+#reports {
+	display: none;
 }
 
 #priceForOneTicket {
 	font-size: 22px;
-	color: gray;
+	color: white;
 	display: inline-block;
 	padding-top: 10px;
 	font-style: oblique;

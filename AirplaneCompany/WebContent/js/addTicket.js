@@ -24,12 +24,14 @@ $(document).ready(function() {
 				   			"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>" +
 					   			"<a class='dropdown-item' href='user.html?username="+data.logged.id+"'>My Profile</a>" +
 					   			"<a class='dropdown-item' href='users.html' id='manageUsers'>Manage Users</a>" +
+					   			"<a class='dropdown-item' href='reports.html' id='reports'>Reports</a>" +
 					   			"<div class='dropdown-divider'></div>" +
 				   				"<a class='dropdown-item' href='LogOutServlet'>Logout</a>" +
 				   			"</div>" +
 				   	   "</li>");
 			if(data.logged.role == "ADMIN"){
 				document.getElementById('manageUsers').style.display='block';
+				document.getElementById('reports').style.display='block';
 			}
 			
 		}else{
@@ -50,7 +52,7 @@ $(document).ready(function() {
 		$.get('FlightServlet', {'id':flightId }, function(data){
 				var f = data.flight;
 				proceTicketForGoingFlight = f.priceTicket;
-				$('#tbody_1').append("<tr>" +
+				$('#tbody_1').append("<tr class='table-light'>" +
 								      "<td>"+f.number+"</td>" +
 								      "<td>"+f.dateGoing+"</td>" +
 								      "<td>"+f.goingAirport.name+"</td>" +
@@ -78,7 +80,7 @@ $(document).ready(function() {
 				for(i in flights){
 					var f = flights[i];
 							if(f.goingAirport.id == cominggAirport && f.comingAirport.id == goinggAirport && f.dateGoing > cominggDate){
-						$('#tbody_3').append("<tr>" +
+						$('#tbody_3').append("<tr class='table-light'>" +
 							      "<td>"+f.number+"</td>" +
 							      "<td>"+f.dateGoing+"</td>" +
 							      "<td>"+f.goingAirport.name+"</td>" +
@@ -198,7 +200,7 @@ $(document).ready(function() {
 		$.get('FlightServlet', {}, function(data){
 			for(i in data.flights){
 				var f = data.flights[i];
-				$('#tbody_1').append("<tr>" +
+				$('#tbody_1').append("<tr class='table-light'>" +
 								      "<td>"+f.number+"</td>" +
 								      "<td>"+f.dateGoing+"</td>" +
 								      "<td>"+f.goingAirport.name+"</td>" +
@@ -240,7 +242,7 @@ $(document).ready(function() {
 					for(i in flights){
 						var f = flights[i];
 								if(f.goingAirport.id == cominggAirport && f.comingAirport.id == goinggAirport && f.dateGoing > cominggDate){
-							$('#tbody_3').append("<tr>" +
+							$('#tbody_3').append("<tr class='table-light'>" +
 								      "<td>"+f.number+"</td>" +
 								      "<td>"+f.dateGoing+"</td>" +
 								      "<td>"+f.goingAirport.name+"</td>" +

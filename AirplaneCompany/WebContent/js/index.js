@@ -15,6 +15,7 @@ $(document).ready(function() {
 				   			"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>" +
 					   			"<a class='dropdown-item' href='user.html?id="+data.logged.id+"'>My Profile</a>" +
 					   			"<a class='dropdown-item' href='users.html' id='manageUsers'>Manage Users</a>" +
+					   			"<a class='dropdown-item' href='reports.html' id='reports'>Reports</a>" +
 					   			"<div class='dropdown-divider'></div>" +
 				   				"<a class='dropdown-item' href='LogOutServlet'>Logout</a>" +
 				   			"</div>" +
@@ -22,6 +23,7 @@ $(document).ready(function() {
 			if(data.logged.role == "ADMIN"){
 				$('#mainn').append("<button type='button' id='addFlight' class='btn btn-primary'><i class='fas fa-plus'></i>  Add new flight</button>");
 				document.getElementById('manageUsers').style.display='block';
+				document.getElementById('reports').style.display='block';
 			}
 			
 		}else{
@@ -42,12 +44,12 @@ $(document).ready(function() {
 		for(i in data.flights){
 			var f = data.flights[i];
 			$('#tbody').append("<tr>" +
-							      "<td><a href='flight.html?id="+f.id+"' class='numberID'>"+f.number+"</a></td>" +
-							      "<td>"+f.dateGoing+"</td>" +
-							      "<td>"+f.dateComing+"</td>" +
-							      "<td>"+f.goingAirport.name+"</td>" +
-							      "<td>"+f.comingAirport.name+"</td>" +
-							      "<td>"+f.priceTicket+" $</td>" +
+							      "<td class='table-light'><a href='flight.html?id="+f.id+"' class='numberID'>"+f.number+"</a></td>" +
+							      "<td class='table-light'>"+f.dateGoing+"</td>" +
+							      "<td class='table-light'>"+f.dateComing+"</td>" +
+							      "<td class='table-light'>"+f.goingAirport.name+"</td>" +
+							      "<td class='table-light'>"+f.comingAirport.name+"</td>" +
+							      "<td class='table-light'>"+f.priceTicket+" $</td>" +
 							    "</tr>");
 		}
 	});
@@ -60,12 +62,12 @@ $(document).ready(function() {
 			for(i in data.flights){
 				var f = data.flights[i];
 				$('#tbody').append("<tr>" +
-								      "<td><a href='flight.html?id="+f.id+"' class='numberID'>"+f.number+"</a></td>" +
-								      "<td>"+f.dateGoing+"</td>" +
-								      "<td>"+f.dateComing+"</td>" +
-								      "<td>"+f.goingAirport.name+"</td>" +
-								      "<td>"+f.comingAirport.name+"</td>" +
-								      "<td>"+f.priceTicket+" $</td>" +
+								      "<td class='table-light'><a href='flight.html?id="+f.id+"' class='numberID'>"+f.number+"</a></td>" +
+								      "<td class='table-light'>"+f.dateGoing+"</td>" +
+								      "<td class='table-light'>"+f.dateComing+"</td>" +
+								      "<td class='table-light'>"+f.goingAirport.name+"</td>" +
+								      "<td class='table-light'>"+f.comingAirport.name+"</td>" +
+								      "<td class='table-light'>"+f.priceTicket+" $</td>" +
 								    "</tr>");
 			}
 		});

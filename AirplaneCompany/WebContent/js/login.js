@@ -9,6 +9,7 @@ $(document).ready(function() {
 		var password = passwordInput.val();
 		
 		if(userName == "" || password == ""){
+			message.fadeIn();
 			message.text("You need to fill in all fields!");
 		}else{
 			$.post('LoginServlet', {'username': userName, 'password': password}, function(data) {
@@ -17,6 +18,7 @@ $(document).ready(function() {
 					window.location.replace('index.html');
 				}
 				if (data.status == 'failure') {
+					message.fadeIn();
 					message.text("Selected incorrect data!");
 				}
 			});

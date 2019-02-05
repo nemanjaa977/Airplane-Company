@@ -1,14 +1,24 @@
+body {
+	background-image: url('../photos/photo_2.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
 #oneFlight {
 	margin-top: 50px;
 }
 
 #title {
-	font-size: 22px;
+	font-size: 28px;
 	text-align: center;
+	color: white;
+	background: rgba(51,51,51,0.60) none no-repeat scroll 0 0;
+	border-radius: 5px;
 }
 
 .table > tbody > tr > th {
-	border-right: 1px solid gray;
+
 	text-align: center;
 }
 
@@ -20,6 +30,14 @@
 
 .table > tbody > tr > td:hover {
 	color: black;
+}
+
+#oneFlight > table {
+	background-color: white;
+}
+
+#reports {
+	display: none;
 }
 
 #manageUsers {
@@ -37,8 +55,10 @@
 #titleForReservation {
 	text-align: center;
 	font-size: 30px;
-	color: #333;
+	color: white;
 	margin-top: 20px;
+	background: rgba(51,51,51,0.60) none no-repeat scroll 0 0;
+	border-radius: 5px;
 }
 
 #allReservationTicketByAdmin {
@@ -49,8 +69,10 @@
 #titleForSale {
 	text-align: center;
 	font-size: 30px;
-	color: #333;
+	color: white;
 	margin-top: 20px;
+	background: rgba(51,51,51,0.60) none no-repeat scroll 0 0;
+	border-radius: 5px;
 }
 
 #allSoldTicketByAdmin {
@@ -58,7 +80,19 @@
 	margin-top: 20px;
 }
 
+#editFlightByAdmin {
+	padding: 10px;
+}
+
 #formEditFlight {
 	display: none;
+	padding: 15px;
+	background: rgba(245,245,245,0.49) none no-repeat scroll 0 0;
+	border-radius: 5px;
+}
+
+#labela {
+	color: black;
+	font-size: 19px;
 }
 

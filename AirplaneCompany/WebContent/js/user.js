@@ -30,6 +30,7 @@ $(document).ready(function() {
 				   			"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>" +
 					   			"<a class='dropdown-item' href='user.html?id="+data.logged.id+"'>My Profile</a>" +
 					   			"<a class='dropdown-item' href='users.html' id='manageUsers'>Manage Users</a>" +
+					   			"<a class='dropdown-item' href='reports.html' id='reports'>Reports</a>" +
 					   			"<div class='dropdown-divider'></div>" +
 				   				"<a class='dropdown-item' href='LogOutServlet'>Logout</a>" +
 				   			"</div>" +
@@ -37,6 +38,7 @@ $(document).ready(function() {
 			
 			if(data.logged.role == "ADMIN"){
 				document.getElementById('manageUsers').style.display='block';
+				document.getElementById('reports').style.display='block';
 				$('#divB').append("<button type='button' class='btn btn-dark blockButton' id='"+userID+"'><i class='fas fa-ban'></i> Block</button>" +
 								  "<button type='button' class='btn btn-dark unblockButton' id='"+userID+"'><i class='fas fa-ban'></i> Unblock</button>" +
 			   					  "<button type='button' class='btn btn-danger deleteButton' id='"+userID+"'><i class='fas fa-trash'></i> Delete</button>");
@@ -195,7 +197,7 @@ $(document).ready(function() {
 					for(i in data.tickets){
 						var t = data.tickets[i];
 						if(t.userCreateReservationOrSaleTicket.id == userID){
-							$('#tbody_2').append("<tr id="+t.id+">" +
+							$('#tbody_2').append("<tr id="+t.id+" class='table-light'>" +
 								      "<td><a href='ticket.html?id="+t.id+"' class='dateRRR'>"+t.dateReservation+"</a></td>" +
 								      "<td><a href='ticket.html?id="+t.id+"' class='dateSSS'>"+t.dateOfSaleTicket+"</a></td>" +
 								      "<td>"+t.seatOnGoingFlight+"</td>" +

@@ -1,7 +1,25 @@
+body {
+	background-image: url('../photos/photo_2.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
 #mainn {
 	margin-top: 50px;
 }
 
 #searchBox {
 	margin-top: 40px;
+}
+
+#searchOK {
+	background-color: #4285F4;
+	color: white;
+}
+
+.numberID {
+	font-size: 18px;
+	text-decoration: none;
+	color: #333;
 }

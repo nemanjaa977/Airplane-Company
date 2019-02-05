@@ -275,7 +275,7 @@ public class TicketDAO {
 		ResultSet rset = null;
 		ArrayList<ReservationTicket> tickets = new ArrayList<ReservationTicket>();
 		try {
-			String query = "SELECT * FROM  tickets t JOIN flights f ON t.goingFlight = f.goingAirport WHERE f.id = ? AND NOT ISNULL(t.dateReservation);";
+			String query = "SELECT * FROM  tickets t WHERE t.goingFlight = ? AND NOT ISNULL(t.dateReservation);";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, flightId);

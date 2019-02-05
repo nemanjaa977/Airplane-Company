@@ -1,14 +1,19 @@
+body {
+	background-image: url('../photos/photo_2.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
 #oneTicket {
 	margin-top: 50px;
 }
 
 .table > tbody > tr > th {
-	border-right: 1px solid gray;
 	text-align: center;
 }
 
 .table > tbody > tr > td {
-	color: gray;
 	cursor: pointer;
 	text-align: center;
 }
@@ -60,4 +65,12 @@
 
 #editDiv {
 	display: none;
+}
+
+#reports {
+	display: none;
+}
+
+#oneTicket > table {
+	background-color: white;
 }

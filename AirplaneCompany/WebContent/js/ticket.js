@@ -5,6 +5,8 @@ $(document).ready(function() {
 	var ticketId = window.location.search.slice(1).split('&')[0].split('=')[1];
 	
 	var dateGoingForEdit = null;
+	var goingFlightForLoadSeat = null;
+	var comingFlightForLoadSeat = null;
 	
 	$.get('UserServlet', {}, function(data){
 		console.log('Logged: ' + data.logged);
@@ -17,12 +19,14 @@ $(document).ready(function() {
 				   			"<div class='dropdown-menu' aria-labelledby='navbarDropdown'>" +
 					   			"<a class='dropdown-item' href='user.html?username="+data.logged.id+"'>My Profile</a>" +
 					   			"<a class='dropdown-item' href='users.html' id='manageUsers'>Manage Users</a>" +
+					   			"<a class='dropdown-item' href='reports.html' id='reports'>Reports</a>" +
 					   			"<div class='dropdown-divider'></div>" +
 				   				"<a class='dropdown-item' href='LogOutServlet'>Logout</a>" +
 				   			"</div>" +
 				   	   "</li>");
 			if(data.logged.role == "ADMIN"){
 				document.getElementById('manageUsers').style.display='block';
+				document.getElementById('reports').style.display='block';
 			}
 			
 		}
@@ -30,8 +34,8 @@ $(document).ready(function() {
 	
 	$.get('TicketServlet', {'id': ticketId}, function(data){
 		
-			var goingFlightForLoadSeat = data.ticket.goingFlight.id;;
-			var comingFlightForLoadSeat = data.ticket.reverseFlight.id;
+			goingFlightForLoadSeat = data.ticket.goingFlight.id;
+			comingFlightForLoadSeat = data.ticket.reverseFlight.id;
 			
 			$('#goingFlight').text('#' + data.ticket.goingFlight.id);
 			$('#reverseFlight').text('#' + data.ticket.reverseFlight.id);
@@ -102,6 +106,11 @@ $(document).ready(function() {
 			}		
 	    });
 		$.get('FlightServlet', {'id': comingFlightForLoadSeat}, function(data){
+			if(data.flight == null){
+				alert("This ticket can't be changed because reverse flight was deleted!");
+				$('#editDiv').fadeOut();
+			}
+			console.log(comingFlightForLoadSeat);
 			var f = data.flight;
 			for(var i=1;i<f.seatNumber+1;i++){
 				$('#seatOfComingFlight').append("<option value='"+i+"'>"+i+"</option>");

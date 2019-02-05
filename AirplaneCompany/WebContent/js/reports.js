@@ -22,34 +22,6 @@ $(document).ready(function() {
 			
 		}
 		
-		for(i in data.users){
-			var u = data.users[i];
-			$('#tbody').append("<tr class='table-light'>" +
-							      "<td><a href='user.html?id="+u.id+"' class='numberID'>"+u.username+"</a></td>" +
-							      "<td>"+u.dateRegistration+"</td>" +
-							      "<td>"+u.role+"</td>" +
-							    "</tr>");
-		}
-		
-	});
-	
-	$(document).on('click',"#searchOK", function(event){
-		var inputText = $('#inputSearch').val();
-		
-		$.get("SearchUserServlet",{"inputText": inputText},function(data){
-			$('#tbody').empty();
-			for(i in data.users){
-				var u = data.users[i];
-				$('#tbody').append("<tr class='table-light'>" +
-								      "<td><a href='user.html?id="+u.id+"' class='numberID'>"+u.username+"</a></td>" +
-								      "<td>"+u.dateRegistration+"</td>" +
-								      "<td>"+u.role+"</td>" +
-								    "</tr>");
-			}
-		});
-		
-		event.preventDefault();
-		return false;
 	});
 	
 });
