@@ -24,4 +24,33 @@ $(document).ready(function() {
 		
 	});
 	
+	$(document).on('click',"#clickDateOk", function(event){
+		var firstDate = $('#firstDate').val();
+		var secondDate = $('#secondDate').val();
+		
+		var param = {
+				'firstDate': firstDate,
+				'secondDate': secondDate
+		}
+		
+		if(firstDate == "" || secondDate == ""){
+			alert("You must select dates");
+		}else{
+			$.get('ReportServlet', param, function(data){
+				for(i in data.reports){
+					var f = data.reports[i];
+					$('#tbody').append("<tr>" +
+									      "<td class='table-light'>"+f.airportName+"</td>" +
+									      "<td class='table-light'>"+f.flightCount+"</td>" +
+									      "<td class='table-light'>"+f.ticketsCount+"</td>" +
+									    "</tr>");
+				}
+			});
+		}
+		
+		
+		event.preventDefault();
+		return false;
+	});
+	
 });

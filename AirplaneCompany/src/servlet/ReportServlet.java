@@ -13,25 +13,24 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.AirportDAO;
-import model.Airport;
 import model.ReportModel;
 
-public class AirportServlet extends HttpServlet {
+public class ReportServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ArrayList<Airport> airports = null;
+		ArrayList<ReportModel> reportsAirport = null;
 		try {
-			
-			airports = AirportDAO.getAll();
+			String firstDate = request.getParameter("firstDate");
+			String secondDate = request.getParameter("secondDate");
+			reportsAirport = AirportDAO.getAirportsForReports(firstDate, secondDate);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		
 		Map<String, Object> data = new HashMap<>();
-		data.put("airports", airports);
+		data.put("reports", reportsAirport);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(data);
@@ -39,7 +38,6 @@ public class AirportServlet extends HttpServlet {
 		
 		response.getWriter().write(jsonData);
 		System.out.println(jsonData);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
