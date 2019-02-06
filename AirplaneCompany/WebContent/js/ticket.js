@@ -33,12 +33,15 @@ $(document).ready(function() {
 	});
 	
 	$.get('TicketServlet', {'id': ticketId}, function(data){
+			console.log(data);
 		
 			goingFlightForLoadSeat = data.ticket.goingFlight.id;
 			comingFlightForLoadSeat = data.ticket.reverseFlight.id;
 			
-			$('#goingFlight').text('#' + data.ticket.goingFlight.id);
-			$('#reverseFlight').text('#' + data.ticket.reverseFlight.id);
+			$('#title').text('Ticket for ' + data.ticket.goingFlight.number + ' flight');
+			
+			$('#goingFlight').text(data.ticket.goingFlight.number);
+			$('#reverseFlight').text(data.ticket.reverseFlight.number);
 			$('#seatGoing').text(data.ticket.seatOnGoingFlight);
 			$('#seatReverse').text(data.ticket.seatOnReverseFlight);
 			$('#dateReservation').text(data.ticket.dateReservation);

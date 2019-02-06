@@ -104,6 +104,7 @@ $(document).ready(function() {
 		var priceTicket = $('#inputPriceTicket').val();
 	
 		if(numberF == "" || seatNumber == "" || priceTicket == ""){
+			message.fadeIn();
 			message.text("You need to fill in all fields!");
 		}else{
 			
@@ -126,7 +127,8 @@ $(document).ready(function() {
 					}
 				});
 			}else{
-				message.text("Date of going can't bigger than date of coming!");
+				message.text("Something wrongs with dates!");
+				message.fadeIn();
 			}
 			
 		}

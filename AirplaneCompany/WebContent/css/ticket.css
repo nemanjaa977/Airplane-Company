@@ -5,6 +5,21 @@ body {
     background-size: cover;
 }
 
+nav {
+	background-color: #333;
+}
+
+#logoo {
+	font-style: italic;
+	color: white;
+	padding-right: 20px;
+}
+
+#nav > li > a {
+	color: white;
+	font-size: 18px;
+}
+
 #oneTicket {
 	margin-top: 50px;
 }
@@ -60,11 +75,15 @@ body {
 }
 
 #firsEditSeat {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 #editDiv {
+	margin-top: 5px;
 	display: none;
+	padding: 15px;
+	background: rgba(245,245,245,0.49) none no-repeat scroll 0 0;
+	border-radius: 5px;
 }
 
 #reports {
@@ -73,4 +92,12 @@ body {
 
 #oneTicket > table {
 	background-color: white;
+}
+
+#title {
+	font-size: 28px;
+	text-align: center;
+	color: white;
+	background: rgba(51,51,51,0.60) none no-repeat scroll 0 0;
+	border-radius: 5px;
 }

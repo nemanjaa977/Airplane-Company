@@ -5,6 +5,21 @@ body {
     background-size: cover;
 }
 
+nav {
+	background-color: #333;
+}
+
+#logoo {
+	font-style: italic;
+	color: white;
+	padding-right: 20px;
+}
+
+#nav > li > a {
+	color: white;
+	font-size: 18px;
+}
+
 #oneFlight {
 	margin-top: 50px;
 }
