@@ -54,6 +54,13 @@ $(document).ready(function() {
 		if(data.logged != null){
 			$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-ticket-alt'></i>  Take a ticket</button>");
 		}
+		
+		var date = new Date();
+		date.setHours(0,0,0,0);
+		var curentDate = new Date(data.flight.dateGoing);
+		if(curentDate < date){
+			$(".takeTicketFlight").hide();
+		}
 	
 		if(data.logged.role == 'ADMIN'){
 			$('#divButton').append("<button type='button' id='"+data.flight.id+"' class='btn btn-primary editFlightButton'><i class='far fa-edit'></i>  Edit</button>" +

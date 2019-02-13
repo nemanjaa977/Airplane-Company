@@ -200,13 +200,19 @@ $(document).ready(function() {
 		$.get('FlightServlet', {}, function(data){
 			for(i in data.flights){
 				var f = data.flights[i];
-				$('#tbody_1').append("<tr class='table-light'>" +
-								      "<td>"+f.number+"</td>" +
-								      "<td>"+f.dateGoing+"</td>" +
-								      "<td>"+f.goingAirport.name+"</td>" +
-								      "<td>"+f.comingAirport.name+"</td>" +
-								      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-check'></i> Check</button></td>" +
-								    "</tr>");
+				
+				var d2 = new Date(f.dateGoing);
+				var date = new Date();
+				date.setHours(0,0,0,0);
+				if(d2 >= date){
+					$('#tbody_1').append("<tr class='table-light'>" +
+						      "<td>"+f.number+"</td>" +
+						      "<td>"+f.dateGoing+"</td>" +
+						      "<td>"+f.goingAirport.name+"</td>" +
+						      "<td>"+f.comingAirport.name+"</td>" +
+						      "<td><button type='button' id='"+f.id+"' class='btn btn-success takeTicketFlight'><i class='fas fa-check'></i> Check</button></td>" +
+						    "</tr>");
+				}
 			}	
 		});
 		

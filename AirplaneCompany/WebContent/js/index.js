@@ -118,9 +118,12 @@ $(document).ready(function() {
 					'seatNumber': seatNumber,
 					'priceTicket': priceTicket
 			}
+			console.log(dateG);
 			var date = new Date();
 			var d = new Date(dateG);
-			if(dateC > dateG && d > date){
+			date.setHours(0,0,0,0);
+			d.setHours(0,0,0,0);
+			if(dateC > dateG && d >= date){
 				$.post('FlightServlet', json, function(data) {
 					if (data.status == 'success') {
 						window.location.replace('index.html');
